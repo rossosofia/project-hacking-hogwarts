@@ -20,6 +20,7 @@ function start() {
   loadJSON();
 }
 
+
 // ------------- MODEL -------------
 function loadJSON() {
   fetch(endpoint)
@@ -36,12 +37,10 @@ function prepareObjects(jsonData) {
 
     student.gender = jsonObject.gender;
     student.house = makeFirstCapital(jsonObject.house.trim());
-    student.firstname = everyName.firstName;
-    student.lastname = everyName.lastName;;
-    student.middlename = everyName.middleName;;
+    student.firstname = makeFirstCapital(everyName.firstName);
+    student.lastname = makeFirstCapital(everyName.lastName);
+    student.middlename = makeFirstCapital(everyName.middleName);
     student.nickname = everyName.nickName;
-   
-    // const text = jsonObject.fullname.split(" ");
 
     allStudents.push(student);
   });
@@ -55,37 +54,31 @@ return x.charAt(0).toUpperCase() + x.substring(1).toLowerCase();
 }
 
 
+
 function createName(fullname){
     let firstName = fullname.substring(0, fullname.indexOf(" "));
-    let lastName = fullname.substring(fullname.lastIndexOf(" ")+1);
+    let lastName = fullname.substring(fullname.lastIndexOf(" ") +1);
     let nickName;
     let middleName;
+
+    const singleName = /[ ]/
+    let isSingleName = fullname.search(singleName);
+    if(isSingleName === -1){
+        firstName = fullname;
+        lastName = "";
+    }
+
     const nic = /["]/;
     let isNick = fullname.search(nic);
     if (isNick === -1){
      middleName = fullname.substring(fullname.indexOf(" ")+1, fullname.lastIndexOf(" "));
     }else{
-      nickName = fullname.substring(isNick +1, fullname.lastIndexOf("\""));
+      nickName = fullname.substring(isNick+1, fullname.lastIndexOf("\""));
       middleName = fullname.substring(fullname.indexOf(" ")+1, isNick -1);
     }
-    if (firstName === " "){
-      firstName = "";
-    }
-    else if (middleName === " "){
-      middleName = "";
-    }
-    else if(lastName === " "){
-      lastName = "";
-    }
+
     return {firstName , middleName , nickName , lastName}
   }
-    
-
-
-
-
-
-
 
 
 // ------------- VIEW -------------
