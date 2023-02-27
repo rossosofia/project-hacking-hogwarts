@@ -7,9 +7,9 @@ start();
 
 const Student = {
     firstname: "",
-    lastName: "",
-    middleName: "",
-    nickName: "",
+    lastname: "",
+    middlename: "",
+    nickname: "",
     gender: "",
     image: "",
     house: ""
@@ -32,10 +32,16 @@ function loadJSON() {
 function prepareObjects(jsonData) {
   jsonData.forEach((jsonObject) => {
     const student = Object.create(Student);
+    let everyName = createName(jsonObject.fullname.trim());
+
     student.gender = jsonObject.gender;
-    student.house = makeFirstCapital(jsonObject.house.trim()) ;
+    student.house = makeFirstCapital(jsonObject.house.trim());
+    student.firstname = everyName.firstName;
+    student.lastname = everyName.lastName;;
+    student.middlename = everyName.middleName;;
+    student.nickname = everyName.nickName;
    
-    const text = jsonObject.fullname.split(" ");
+    // const text = jsonObject.fullname.split(" ");
 
     allStudents.push(student);
   });
@@ -48,15 +54,32 @@ function makeFirstCapital(x){
 return x.charAt(0).toUpperCase() + x.substring(1).toLowerCase();
 }
 
-// function createName(fullname){
-//     let firstName = fullname.substring(0, fullname.indexOf(" "));
-//     let lastName = fullname.substring(fullname.indexOf(" "));
-//     let middleName =
-//     let nickName =
-//     return {firsName, middleName, nickName, lastName}
-// }
 
-
+function createName(fullname){
+    let firstName = fullname.substring(0, fullname.indexOf(" "));
+    let lastName = fullname.substring(fullname.lastIndexOf(" ")+1);
+    let nickName;
+    let middleName;
+    const nic = /["]/;
+    let isNick = fullname.search(nic);
+    if (isNick === -1){
+     middleName = fullname.substring(fullname.indexOf(" ")+1, fullname.lastIndexOf(" "));
+    }else{
+      nickName = fullname.substring(isNick +1, fullname.lastIndexOf("\""));
+      middleName = fullname.substring(fullname.indexOf(" ")+1, isNick -1);
+    }
+    if (firstName === " "){
+      firstName = "";
+    }
+    else if (middleName === " "){
+      middleName = "";
+    }
+    else if(lastName === " "){
+      lastName = "";
+    }
+    return {firstName , middleName , nickName , lastName}
+  }
+    
 
 
 
@@ -80,6 +103,10 @@ function displayStudent(student) {
   // set clone data
   clone.querySelector("[data-field=gender").textContent = student.gender;
   clone.querySelector("[data-field=house]").textContent = student.house;
+  clone.querySelector("[data-field=firstName").textContent = student.firstname;
+  clone.querySelector("[data-field=middleName]").textContent = student.middlename;
+  clone.querySelector("[data-field=nickName").textContent = student.nickname;
+  clone.querySelector("[data-field=lastName]").textContent = student.lastname;
   // append clone to list
   document.querySelector("#list tbody").appendChild(clone);
 }
