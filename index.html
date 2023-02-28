@@ -7,35 +7,38 @@
     <title>Hogwarts' Students List</title>
     <link rel="stylesheet" href="stylesheet.css" />
     <script type="module" src="cleandata.js"></script>
+    <script type="module" src="bloodstatus.js"></script>
   </head>
   <body>
     <table id="list">
-        <thead>
-          <tr>
-            <th>Image</th>
-            <th>First Name</th>
-            <th>Middle Name</th>
-            <th>Nick Name</th>
-            <th>Last Name</th>
-            <th>Gender</th>
-            <th>House</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- student's template will be copied and inserted here -->
-        </tbody>
-      </table>
-  
-      <template id="student">
+      <thead>
         <tr>
-          <td><img id="image" src="images/bones_s.png" alt=""></td>
-          <td data-field="firstName">First Name</td>
-          <td data-field="middleName">Middle Name</td>
-          <td data-field="nickName">Nick Name</td>
-          <td data-field="lastName">Last Name</td>
-          <td data-field="gender">Gender</td>
-          <td data-field="house">House</td>
+          <th>Image</th>
+          <th>First Name</th>
+          <th>Middle Name</th>
+          <th>Nick Name</th>
+          <th>Last Name</th>
+          <th>Gender</th>
+          <th>House</th>
+          <th>Blood status</th>
         </tr>
-      </template>
+      </thead>
+      <tbody>
+        <!-- student's template will be copied and inserted here -->
+      </tbody>
+    </table>
+
+    <template id="student">
+      <tr>
+        <td><img id="image" src="images/bones_s.png" alt="" /></td>
+        <td data-field="firstName">First Name</td>
+        <td data-field="middleName">Middle Name</td>
+        <td data-field="nickName">Nick Name</td>
+        <td data-field="lastName">Last Name</td>
+        <td data-field="gender">Gender</td>
+        <td data-field="house">House</td>
+        <td data-field="bloodStatus">Blood Status</td>
+      </tr>
+    </template>
   </body>
 </html>

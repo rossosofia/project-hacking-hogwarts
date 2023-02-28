@@ -1,19 +1,22 @@
 "use strict"
 
+import {getBloodStatus} from "./bloodstatus.js"; 
+
 const allStudents = []; 
 const endpoint = `https://petlatkea.dk/2021/hogwarts/students.json`;
 
-start();
-
 const Student = {
-    firstname: "",
-    lastname: "",
-    middlename: "",
-    nickname: "",
-    gender: "",
-    image: "",
-    house: ""
+  firstname: "",
+  lastname: "",
+  middlename: "",
+  nickname: "",
+  gender: "",
+  image: "",
+  house: "",
+  bloodstatus: "",
 };
+
+start();
 
 function start() {
   console.log("ready");
@@ -30,24 +33,27 @@ function loadJSON() {
     });
 }
 
+
 function prepareObjects(jsonData) {
   jsonData.forEach((jsonObject) => {
     const student = Object.create(Student);
     let everyName = createName(jsonObject.fullname.trim());
 
-    student.gender = jsonObject.gender;
+    student.gender = makeFirstCapital(jsonObject.gender);
     student.house = makeFirstCapital(jsonObject.house.trim());
     student.firstname = makeFirstCapital(everyName.firstName);
     student.lastname = makeLastNameCapital(everyName.lastName);
     student.middlename = makeFirstCapital(everyName.middleName);
     student.nickname = everyName.nickName;
     student.image = `images/${everyName.lastName.toLowerCase()}_${everyName.firstName.charAt(0).toLowerCase()}.png`;
-
+    student.bloodstatus = getBloodStatus(everyName.lastName);
+    
     allStudents.push(student);
   });
 
   displayList();
 }
+
 
 // ------------- CONTROLLER -------------
 function makeFirstCapital(x){
@@ -64,7 +70,6 @@ function makeLastNameCapital(x){
     let second = x.charAt(hasHyphen+1).toUpperCase() + x.substring(hasHyphen+2).toLowerCase();
 
     return `${first}-${second}`
-
   }}
 
 function createName(fullname){
@@ -93,9 +98,6 @@ function createName(fullname){
   }
 
 
-
-
-
 // ------------- VIEW -------------
 function displayList() {
   // clear the list
@@ -116,6 +118,7 @@ function displayStudent(student) {
   clone.querySelector("[data-field=lastName]").textContent = student.lastname;
   clone.querySelector("[data-field=gender").textContent = student.gender;
   clone.querySelector("[data-field=house]").textContent = student.house;
+  clone.querySelector("[data-field=bloodStatus]").textContent = student.bloodstatus;
   // append clone to list
   document.querySelector("#list tbody").appendChild(clone);
 }
