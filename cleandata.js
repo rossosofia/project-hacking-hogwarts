@@ -38,9 +38,10 @@ function prepareObjects(jsonData) {
     student.gender = jsonObject.gender;
     student.house = makeFirstCapital(jsonObject.house.trim());
     student.firstname = makeFirstCapital(everyName.firstName);
-    student.lastname = makeFirstCapital(everyName.lastName);
+    student.lastname = makeLastNameCapital(everyName.lastName);
     student.middlename = makeFirstCapital(everyName.middleName);
     student.nickname = everyName.nickName;
+    student.image = `images/${everyName.lastName.toLowerCase()}_${everyName.firstName.charAt(0).toLowerCase()}.png`;
 
     allStudents.push(student);
   });
@@ -53,7 +54,18 @@ function makeFirstCapital(x){
 return x.charAt(0).toUpperCase() + x.substring(1).toLowerCase();
 }
 
+function makeLastNameCapital(x){
+  const hyp = /[-]/;
+  let hasHyphen = x.search(hyp);
+  if(hasHyphen === -1){
+    return x.charAt(0).toUpperCase() + x.substring(1).toLowerCase();
+  }else{
+    let first = x.charAt(0).toUpperCase() + x.substring(1,hasHyphen).toLowerCase();
+    let second = x.charAt(hasHyphen+1).toUpperCase() + x.substring(hasHyphen+2).toLowerCase();
 
+    return `${first}-${second}`
+
+  }}
 
 function createName(fullname){
     let firstName = fullname.substring(0, fullname.indexOf(" "));
@@ -81,6 +93,9 @@ function createName(fullname){
   }
 
 
+
+
+
 // ------------- VIEW -------------
 function displayList() {
   // clear the list
@@ -94,12 +109,13 @@ function displayStudent(student) {
   // create clone
   const clone = document.querySelector("template#student").content.cloneNode(true);
   // set clone data
-  clone.querySelector("[data-field=gender").textContent = student.gender;
-  clone.querySelector("[data-field=house]").textContent = student.house;
+  clone.querySelector("#image").src = student.image;
   clone.querySelector("[data-field=firstName").textContent = student.firstname;
   clone.querySelector("[data-field=middleName]").textContent = student.middlename;
   clone.querySelector("[data-field=nickName").textContent = student.nickname;
   clone.querySelector("[data-field=lastName]").textContent = student.lastname;
+  clone.querySelector("[data-field=gender").textContent = student.gender;
+  clone.querySelector("[data-field=house]").textContent = student.house;
   // append clone to list
   document.querySelector("#list tbody").appendChild(clone);
 }
