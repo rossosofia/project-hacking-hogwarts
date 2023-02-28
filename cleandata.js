@@ -44,7 +44,7 @@ function prepareObjects(jsonData) {
     student.lastname = makeLastNameCapital(everyName.lastName);
     student.middlename = makeFirstCapital(everyName.middleName);
     student.nickname = everyName.nickName;
-    student.image = `images/${everyName.lastName.toLowerCase()}_${everyName.firstName.charAt(0).toLowerCase()}.png`;
+    student.image = putImage(everyName.lastName, everyName.firstName);
     student.bloodstatus = getBloodStatus(everyName.lastName);
     
     allStudents.push(student);});
@@ -94,6 +94,15 @@ function createName(fullname){
     return {firstName , middleName , nickName , lastName}
   }
 
+  function putImage(lastname, firstname){
+    if (lastname.includes("-")){
+      return `images/${lastname.substring(lastname.indexOf("-")+1)}_${firstname.charAt(0).toLowerCase()}.png`;
+    } else if (lastname === "Patil") {
+      return `images/${lastname.toLowerCase()}_${firstname.toLowerCase()}.png`;
+    } else {
+      return `images/${lastname.toLowerCase()}_${firstname.charAt(0).toLowerCase()}.png`;
+  }
+}
 
 // ------------- VIEW -------------
 function displayList() {
@@ -119,3 +128,4 @@ function displayStudent(student) {
   // append clone to list
   document.querySelector("#list tbody").appendChild(clone);
 }
+
