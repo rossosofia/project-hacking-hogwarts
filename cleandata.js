@@ -33,7 +33,6 @@ function loadJSON() {
     });
 }
 
-
 function prepareObjects(jsonData) {
   jsonData.forEach((jsonObject) => {
     const student = Object.create(Student);
@@ -48,8 +47,7 @@ function prepareObjects(jsonData) {
     student.image = `images/${everyName.lastName.toLowerCase()}_${everyName.firstName.charAt(0).toLowerCase()}.png`;
     student.bloodstatus = getBloodStatus(everyName.lastName);
     
-    allStudents.push(student);
-  });
+    allStudents.push(student);});
 
   displayList();
 }
@@ -68,7 +66,6 @@ function makeLastNameCapital(x){
   }else{
     let first = x.charAt(0).toUpperCase() + x.substring(1,hasHyphen).toLowerCase();
     let second = x.charAt(hasHyphen+1).toUpperCase() + x.substring(hasHyphen+2).toLowerCase();
-
     return `${first}-${second}`
   }}
 
