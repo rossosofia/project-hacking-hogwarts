@@ -53,6 +53,7 @@ function prepareObjects(jsonData) {
 }
 
 
+
 // ------------- CONTROLLER -------------
 function makeFirstCapital(x){
 return x.charAt(0).toUpperCase() + x.substring(1).toLowerCase();
@@ -116,6 +117,7 @@ function displayList() {
 function displayStudent(student) {
   // create clone
   const clone = document.querySelector("template#student").content.cloneNode(true);
+  
   // set clone data
   clone.querySelector("#image").src = student.image;
   clone.querySelector("[data-field=firstName").textContent = student.firstname;
@@ -125,6 +127,7 @@ function displayStudent(student) {
   clone.querySelector("[data-field=gender").textContent = student.gender;
   clone.querySelector("[data-field=house]").textContent = student.house;
   clone.querySelector("[data-field=bloodStatus]").textContent = student.bloodstatus;
+
   // append clone to list
   document.querySelector("#list tbody").appendChild(clone);
 }
