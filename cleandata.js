@@ -14,6 +14,8 @@ const Student = {
   image: "",
   house: "",
   bloodstatus: "",
+  squad: false,
+  prefect: false
 };
 
 start();
@@ -46,12 +48,12 @@ function prepareObjects(jsonData) {
     student.nickname = everyName.nickName;
     student.image = putImage(everyName.lastName, everyName.firstName);
     student.bloodstatus = getBloodStatus(everyName.lastName);
+
     
     allStudents.push(student);});
 
   displayList();
 }
-
 
 
 // ------------- CONTROLLER -------------
@@ -106,7 +108,7 @@ function createName(fullname){
 }
 
 // ------------- VIEW -------------
-function displayList() {
+export function displayList() {
   // clear the list
   document.querySelector("#list tbody").innerHTML = "";
 
@@ -117,7 +119,11 @@ function displayList() {
 function displayStudent(student) {
   // create clone
   const clone = document.querySelector("template#student").content.cloneNode(true);
-  
+  if(student.squad){
+    clone.querySelector("[data-field=squad]").textContent = "⭐";
+  } else {
+    clone.querySelector("[data-field=squad]").textContent = "☆";
+  }
   // set clone data
   clone.querySelector("#image").src = student.image;
   clone.querySelector("[data-field=firstName").textContent = student.firstname;
@@ -127,6 +133,17 @@ function displayStudent(student) {
   clone.querySelector("[data-field=gender").textContent = student.gender;
   clone.querySelector("[data-field=house]").textContent = student.house;
   clone.querySelector("[data-field=bloodStatus]").textContent = student.bloodstatus;
+  
+  clone.querySelector("[data-field=squad]").addEventListener(`click`, addToSquad);
+  
+  function addToSquad(){
+    if(student.bloodstatus === "Pure Blood" || student.house === "Slytherin"){
+      student.squad = !student.squad;
+      displayList();
+  } else {
+    alert("you cannooooot!!!");
+  }
+}
 
   // append clone to list
   document.querySelector("#list tbody").appendChild(clone);
