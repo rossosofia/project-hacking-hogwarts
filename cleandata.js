@@ -204,6 +204,7 @@ function tryToMakeAPrefect(selectedStudent){
    
 }
 
+// common to both solutions
 function removePrefect(prefectStudent){
   console.log("remove prefect");
   prefectStudent.prefect = false;
@@ -219,7 +220,7 @@ function makePrefect(student){
 // ------------- VIEW ------------- 
 function displayList() {
   // clear the list
-  document.querySelector("#list tbody").innerHTML = "";
+  document.querySelector("section.students-list table#list tbody").innerHTML = "";
 
   // build a new list
   allStudents.forEach(displayStudent);
@@ -247,7 +248,7 @@ function displayStudent(student) {
   //add someone to the squad
   clone.querySelector("[data-field=squad]").addEventListener(`click`, addToSquad);
     function addToSquad(){
-      if(student.bloodstatus ==="Pure Blood" || student.house ==="Slytherin"){
+      if(student.bloodstatus === "Pure Blood" || student.house === "Slytherin"){
         student.squad = !student.squad;
        }else{
          alert("you cannott")
@@ -267,14 +268,8 @@ function displayStudent(student) {
             tryToMakeAPrefect(student);
             console.log("im in the else")
         }
-        //buildList();
-        //displayList(); //??????????????????
     displayList();
     }
-      
-     
-    
-  
 
   // append clone to list
   document.querySelector("#list tbody").appendChild(clone);
