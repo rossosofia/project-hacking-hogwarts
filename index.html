@@ -4,11 +4,13 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hogwarts' Students List</title>
     <link rel="stylesheet" href="stylesheet.css" />
     <script type="module" src="cleandata.js"></script>
     <script type="module" src="bloodstatus.js"></script>
     <script type="module" src="inquisitorial-squad.js"></script>
+    <!-- <script type="module" src="prefect.js"></script> -->
+
+    <title>Hogwarts List</title>
   </head>
   <body>
     <p>
@@ -33,7 +35,7 @@
           <th>Last Name</th>
           <th>Gender</th>
           <th>House</th>
-          <th>Blood status</th>
+          <th>Blood Status</th>
         </tr>
       </thead>
       <tbody>
@@ -44,7 +46,7 @@
     <template id="student">
       <tr>
         <td data-field="squad"></td>
-        <td data-field="prefects"></td>
+        <td data-field="prefects" data-prefect="false"></td>
         <td><img id="image" src="images/bones_s.png" alt="" /></td>
         <td data-field="firstName">First Name</td>
         <td data-field="middleName">Middle Name</td>
@@ -52,8 +54,72 @@
         <td data-field="lastName">Last Name</td>
         <td data-field="gender">Gender</td>
         <td data-field="house">House</td>
-        <td data-field="bloodStatus">Blood Status</td>
+        <td data-field="bloodStatus"></td>
       </tr>
     </template>
+
+    <div id="onlytwowinners" class="modal hide">
+      <div class="dialog">
+        <button class="closebutton">X</button>
+        <h1>Warning!</h1>
+        <h2>
+          You can only have two prefects of each house!
+          <br />
+          Remove one, before you appoint more
+        </h2>
+        <p>
+          <button data-action="remove1">
+            remove <span class="student1">NAME, the House</span>
+          </button>
+        </p>
+        <p>
+          <button data-action="remove2">
+            remove <span class="student2">NAME, the House</span>
+          </button>
+        </p>
+      </div>
+    </div>
+
+    <!-- method 1 -->
+<!-- 
+    <div id="onlyonekind" class="modal hide">
+      <div class="dialog">
+        <button class="closebutton">X</button>
+        <h1>Warning!</h1>
+        <h2>
+          You can only have one prefect of each gender. <br />Remove the other
+          if you want to appoint a new one
+        </h2>
+        <p>
+          <button data-action="remove1">
+            remove <span class="animal1"></span>
+          </button>
+          <button data-action="remove2">
+            remove <span class="animal2"></span>
+          </button>   
+        </p> -->
+
+        <!-- method 2 -->
+        <div id="onlytwo" class="modal hide">
+          <div class="dialog">
+            <button class="closebutton">X</button>
+            <h1>Warning!</h1>
+            <h2>
+              You can only have one prefect of each gender. <br />Remove the other
+              if you want to appoint a new one
+            </h2>
+            <p>
+              <button data-action="remove1">
+                remove <span class="animal1"></span>
+              </button>
+              <button data-action="remove2">
+                remove <span class="animal2"></span>
+              </button>
+              <button data-action="remove3">
+                remove <span class="animal3"></span>
+              </button>
+              </p>
+      </div>
+    </div>
   </body>
 </html>
