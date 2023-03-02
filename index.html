@@ -13,6 +13,7 @@
   <body>
     <header><h1>Hogwarts</h1></header>
     <main>
+      
       <section id="aside">
 
         <div class="admin">
@@ -46,80 +47,72 @@
       </section>
 
       <div id="main-area">
+
         <section class="header">
           <h2>Class 1991</h2>
           <section id="filter">
             <div>
-            <h3>Houses</h3>
-            <button class="filter" data-action="filter" data-filter="gryffindor">
-              Gryffindor
-            </button>
-            <button class="filter" data-action="filter" data-filter="slytherin">
-              Slytherin
-            </button>
-            <button class="filter" data-action="filter" data-filter="ravenclaw">
-              Ravenclaw
-            </button>
-            <button
-              class="filter"
-              data-action="filter"
-              data-filter="hufflepuff"
-            >
-              Hufflepuff
-            </button>
-          </div>
-          <div>
-            <h3>Blood status</h3>
-            <button
-              class="filter"
-              data-action="filter"
-              data-filter="pure-blood"
-            >
-              Pure Blood
-            </button>
-            <button
-              class="filter"
-              data-action="filter"
-              data-filter="half-blood"
-            >
-              Half-Blood
-            </button>
-            <button class="filter" data-action="filter" data-filter="muggle">
-              Muggle
-            </button>
-          </div>
-          <div>
-            <h3>Roles</h3>
-            <button class="filter" data-action="filter" data-filter="prefects">
-              Prefects
-            </button>
-            <button class="filter" data-action="filter" data-filter="squad">
-              Inquisitorial squad
-            </button>
-          </div>
-          <div>
-            <h3>Status</h3>
-            <button class="filter" data-action="filter" data-filter="expelled">
-              Expelled
-            </button>
-            <button class="filter" data-action="filter" data-filter="enrolled">
-              Enrolled
-            </button>
+              <h3>Houses</h3>
+              <button class="filter" data-action="filter" data-filter="gryffindor">
+               Gryffindor
+              </button>
+              <button class="filter" data-action="filter" data-filter="slytherin">
+               Slytherin
+              </button>
+              <button class="filter" data-action="filter" data-filter="ravenclaw">
+               Ravenclaw
+              </button>
+              <button
+               class="filter" data-action="filter" data-filter="hufflepuff">
+               Hufflepuff
+              </button>
+            </div>
+            <div>
+             <h3>Blood status</h3>
+             <button class="filter" data-action="filter" data-filter="pure-blood">
+               Pure Blood
+             </button>
+             <button class="filter" data-action="filter" data-filter="half-blood">
+               Half-Blood
+             </button>
+             <button class="filter" data-action="filter" data-filter="muggle">
+               Muggle
+             </button>
+            </div>
+            <div>
+             <h3>Roles</h3>
+             <button class="filter" data-action="filter" data-filter="prefects">
+               Prefects
+             </button>
+             <button class="filter" data-action="filter" data-filter="squad">
+               Inquisitorial squad
+             </button>
+            </div>
+            <div>
+             <h3>Status</h3>
+             <button class="filter" data-action="filter" data-filter="expelled">
+               Expelled
+             </button>
+             <button class="filter" data-action="filter" data-filter="enrolled">
+               Enrolled
+             </button>
             </div>
           </section>
           <section class="search-sort">
-            <input type="text" placeholder="Search a student.." />
-            <div id="drop-down-menu">
-              <p>Sort by</p>
-              <select id="sort-options">
+           <input type="text" placeholder="Type a name here..." />
+           <div id="drop-down-menu">
+             <p>Sort by</p>
+             <select id="sort-options">
                 <option value="0">A - Z</option>
                 <option value="1">Z - A</option>
                 <option value="2">Houses</option>
-              </select>
-            </section>
+             </select>
+           </div>
+          </section>
         </section>
+
         <section class="students-list">
-            <table id="list">
+          <table id="list">
               <thead>
                 <tr>
                   <th>Inquisitorial Squad</th>
@@ -137,8 +130,8 @@
               <tbody>
                 <!-- student's template will be copied and inserted here -->
               </tbody>
-            </table>
-            <template id="student">
+          </table>
+          <template id="student">
               <tr>
                 <td data-field="squad"></td>
                 <td data-field="prefects" data-prefect="false"></td>
@@ -151,76 +144,30 @@
                 <td data-field="house">House</td>
                 <td data-field="bloodStatus"></td>
               </tr>
-            </template>
+          </template>
         </section>
+
       </div>
     </main>
 
-
-
-    <div id="onlytwowinners" class="modal hide">
-      <div class="dialog">
-        <button class="closebutton">X</button>
-        <h1>Warning!</h1>
-        <h2>
-          You can only have two prefects of each house!
-          <br />
-          Remove one, before you appoint more
-        </h2>
-        <p>
-          <button data-action="remove1">
-            remove <span class="student1">NAME, the House</span>
-          </button>
-        </p>
-        <p>
-          <button data-action="remove2">
-            remove <span class="student2">NAME, the House</span>
-          </button>
-        </p>
-      </div>
-    </div>
-
-    <!-- method 1 -->
-    
+    <!-- dialogs -->
     <div id="onlyonekind" class="modal hide">
       <div class="dialog">
         <button class="closebutton">X</button>
         <h1>Warning!</h1>
         <h2>
-          You can only have one prefect of each gender. <br />Remove the other
-          if you want to appoint a new one
+          You can only have one prefect of each gender. <br />Remove one.
         </h2>
         <p>
           <button data-action="remove1">
-            remove <span class="animal1"></span>
+            remove <span class="student1"></span>
           </button>
           <button data-action="remove2">
-            remove <span class="animal2"></span>
+            remove <span class="student2"></span>
           </button>   
         </p>
       </div>
     </div>
-    <!-- method 2 -->
-    <div id="onlytwo" class="modal hide">
-      <div class="dialog">
-        <button class="closebutton">X</button>
-        <h1>Warning!</h1>
-        <h2>
-          You can only have one prefect of each gender. <br />Remove the other
-          if you want to appoint a new one
-        </h2>
-        <p>
-          <button data-action="remove1">
-            remove <span class="animal1"></span>
-          </button>
-          <button data-action="remove2">
-            remove <span class="animal2"></span>
-          </button>
-          <button data-action="remove3">
-            remove <span class="animal3"></span>
-          </button>
-        </p>
-      </div>
-    </div>
+    
   </body>
 </html>
