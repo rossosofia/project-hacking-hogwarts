@@ -18,11 +18,14 @@ const Student = {
   prefect: false
 };
 
+let globalObject = {filter: "*"};
+
 start();
 
 function start() {
   console.log("ready");
   loadJSON();
+  triggerButtons();
 }
 
 
@@ -52,11 +55,12 @@ function prepareObjects(jsonData) {
     
     allStudents.push(student);});
 
-  displayList();
+  displayList(allStudents);
 }
 
 
 // ------------- CONTROLLER -------------
+// ******* clean data *******
 function makeFirstCapital(x){
 return x.charAt(0).toUpperCase() + x.substring(1).toLowerCase();
 }
@@ -101,7 +105,7 @@ function createName(fullname){
     return {firstName , middleName , nickName , lastName}
   }
 
-  function putImage(lastname, firstname){
+function putImage(lastname, firstname){
     if (lastname.includes("-")){
       return `images/${lastname.substring(lastname.indexOf("-")+1)}_${firstname.charAt(0).toLowerCase()}.png`;
     } else if (lastname === "Patil") {
@@ -111,8 +115,39 @@ function createName(fullname){
   }
 }
 
+// ******* filtering *******
+function triggerButtons(){
+  document.querySelectorAll(".filter").forEach((each) =>{each.addEventListener("click", filterInput)});
+}
 
-// ----------- SOLUTION 1 - ONE BOY, ONE GIRL FOR EACH HOUSE. WE DON'T NEED THE CHECK THE LENGTH ----------------------
+function filterInput(event){
+  let filteredList;
+  globalObject.filter = event.target.dataset.filter;
+  console.log(globalObject.filter);
+  if (globalObject.filter !== "*") {
+      filteredList = allStudents.filter(filterBy);
+  } else {
+      filteredList = allStudents;
+  }
+  displayList(filteredList);
+}
+
+function filterBy(student){
+  if (student.house.toLowerCase() === globalObject.filter){
+      return true;
+  }
+  
+  if (student.bloodstatus.toLowerCase() === globalObject.filter){
+    return true;
+  }
+
+  if (student.prefect.toLowerCase()){
+    return true;
+  }
+  
+}
+
+// ******* prefect *******
 
 function tryToMakeAPrefect(selectedStudent){
   const prefects = allStudents.filter(student => student.prefect)
@@ -174,17 +209,14 @@ function makePrefect(student){
 
 }
 
-
 // ------------- VIEW ------------- 
 
-
-
-function displayList() {
+function displayList(students) {
   // clear the list
   document.querySelector("section.students-list table#list tbody").innerHTML = "";
 
   // build a new list
-  allStudents.forEach(displayStudent);
+  students.forEach(displayStudent);
 }
 
 function displayStudent(student) {
@@ -204,10 +236,8 @@ function displayStudent(student) {
   //add someone to the squad
   if (student.squad) {
     clone.querySelector("[data-field=squad]").innerHTML = "⭐";
-    console.log("you are a squad member - change star");
   } else {
     clone.querySelector("[data-field=squad]").innerHTML = "☆";
-    console.log("you are not squad");
   }
   
   clone.querySelector("[data-field=squad]").addEventListener(`click`, addToSquad);
