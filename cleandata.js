@@ -98,14 +98,6 @@ function createName(fullname){
       middleName = "-";
     }
 
-    // if (lastName = undefined){
-    //   lastName = "-";
-    // }
-
-    // if (nickName = undefined){
-    //   nickName = "-";
-    // }
-
     return {firstName , middleName , nickName , lastName}
   }
 
@@ -198,14 +190,6 @@ function displayList() {
 function displayStudent(student) {
   // create clone
   const clone = document.querySelector("template#student").content.cloneNode(true);
-
-  
-    if(student.squad){
-      clone.querySelector("[data-field=squad]").textContent = "⭐";  
-      console.log("squad is true")
-    } else {
-      clone.querySelector("[data-field=squad]").textContent = "☆";
-    }
   
   // set clone data
   clone.querySelector("#image").src = student.image;
@@ -218,14 +202,25 @@ function displayStudent(student) {
   clone.querySelector("[data-field=bloodStatus]").textContent = student.bloodstatus;
   
   //add someone to the squad
-  clone.querySelector("[data-field=squad]").addEventListener(`click`, addToSquad);
-  function addToSquad(){
-    if(student.bloodstatus === "Pure Blood" || student.house === "Slytherin"){
-      student.squad = !student.squad;
-    }else{
-      alert("you cannott");
-    }
+  if (student.squad) {
+    clone.querySelector("[data-field=squad]").innerHTML = "⭐";
+    console.log("you are a squad member - change star");
+  } else {
+    clone.querySelector("[data-field=squad]").innerHTML = "☆";
+    console.log("you are not squad");
   }
+  
+  clone.querySelector("[data-field=squad]").addEventListener(`click`, addToSquad);
+  
+   function addToSquad() {
+      if (student.bloodstatus === "Pure Blood" || student.house === "Slytherin") {
+        student.squad = !student.squad;
+      } else {
+        alert("you cannot");
+      }
+      displayList();
+    }
+  
   
   //put a student in prefect
   clone.querySelector("[data-field=prefects]").dataset.prefect = student.prefect;
