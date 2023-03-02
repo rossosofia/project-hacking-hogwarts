@@ -94,6 +94,18 @@ function createName(fullname){
       middleName = fullname.substring(fullname.indexOf(" ")+1, isNick -1);
     }
 
+    if (middleName = ""){
+      middleName = "-";
+    }
+
+    // if (lastName = undefined){
+    //   lastName = "-";
+    // }
+
+    // if (nickName = undefined){
+    //   nickName = "-";
+    // }
+
     return {firstName , middleName , nickName , lastName}
   }
 
@@ -172,6 +184,9 @@ function makePrefect(student){
 
 
 // ------------- VIEW ------------- 
+
+
+
 function displayList() {
   // clear the list
   document.querySelector("section.students-list table#list tbody").innerHTML = "";
@@ -194,39 +209,75 @@ function displayStudent(student) {
   
   // set clone data
   clone.querySelector("#image").src = student.image;
-  clone.querySelector("[data-field=firstName").textContent = student.firstname;
+  clone.querySelector("[data-field=firstName]").textContent = student.firstname;
   clone.querySelector("[data-field=middleName]").textContent = student.middlename;
   clone.querySelector("[data-field=nickName").textContent = student.nickname;
   clone.querySelector("[data-field=lastName]").textContent = student.lastname;
   clone.querySelector("[data-field=gender").textContent = student.gender;
   clone.querySelector("[data-field=house]").textContent = student.house;
   clone.querySelector("[data-field=bloodStatus]").textContent = student.bloodstatus;
-
+  
   //add someone to the squad
   clone.querySelector("[data-field=squad]").addEventListener(`click`, addToSquad);
-    function addToSquad(){
-      if(student.bloodstatus === "Pure Blood" || student.house === "Slytherin"){
-        student.squad = !student.squad;
-       }else{
-         alert("you cannott");
-       }
-      }
-
+  function addToSquad(){
+    if(student.bloodstatus === "Pure Blood" || student.house === "Slytherin"){
+      student.squad = !student.squad;
+    }else{
+      alert("you cannott");
+    }
+  }
+  
   //put a student in prefect
   clone.querySelector("[data-field=prefects]").dataset.prefect = student.prefect;
   clone.querySelector("[data-field=prefects]").addEventListener(`click`, makePrefect);
-
-    function makePrefect(){
-        // untoggle a prefect is always possible, but not toggle it (2 winners for each category)
-        if(student.prefect === true){
-            student.prefect = false;
-        } else {
-            tryToMakeAPrefect(student);
-        }
-    displayList();
+  
+  function makePrefect(){
+    // untoggle a prefect is always possible, but not toggle it (2 winners for each category)
+    if(student.prefect === true){
+      student.prefect = false;
+    } else {
+      tryToMakeAPrefect(student);
     }
+    displayList();
+  }
 
+  clone.querySelector("td #image").addEventListener(`click`, () => {displayStudentCard(student)});
+  
   // append clone to list
   document.querySelector("#list tbody").appendChild(clone);
+  
+}
 
+function displayStudentCard(student){
+  const popup = document.querySelector("#student-card");
+  popup.classList.remove("hide");
+  
+  popup.querySelector("#image").src = student.image;
+  popup.querySelector("[data-field=firstName]").textContent = student.firstname;
+  popup.querySelector("[data-field=middleName]").textContent = student.middlename;
+  popup.querySelector("[data-field=nickName").textContent = student.nickname;
+  popup.querySelector("[data-field=lastName]").textContent = student.lastname;
+  popup.querySelector("[data-field=gender").textContent = student.gender;
+  popup.querySelector("[data-field=house]").textContent = student.house;
+  popup.querySelector("[data-field=bloodStatus]").textContent = student.bloodstatus;
+  
+  if(student.house === "Gryffindor"){
+    popup.querySelector("#dialog").classList.add("gryffindor");
+
+  }else if(student.house === "Slytherin"){
+    popup.querySelector("#dialog").classList.add("slytherin");
+  }else if(student.house === "Ravenclaw"){
+    popup.querySelector("#dialog").classList.add("ravenclaw");
+
+  }else{
+    popup.querySelector("#dialog").classList.add("hufflepuff");
   }
+
+  popup.querySelector(".closebutton").addEventListener('click', closeStudentCard);
+  
+  function closeStudentCard(){
+  popup.classList.add("hide");
+  popup.querySelector("#dialog").classList = "";
+  // popup.querySelector(".closebutton").removeEventListener("click", closeStudentCard());
+  }
+}
