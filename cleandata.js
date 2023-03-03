@@ -3,7 +3,7 @@
 import {getBloodStatus} from "./bloodstatus.js"; 
 
 const allStudents = []; 
-let globalObject ={filter: "*" , prefects:[]};
+let globalObject ={filter: "*" , prefects:[] , squad:[] };
 const endpoint = `https://petlatkea.dk/2021/hogwarts/students.json`;
 
 const Student = {
@@ -116,7 +116,8 @@ function putImage(lastname, firstname){
 // ******* filtering *******
 function triggerButtons(){
   document.querySelectorAll(".filter").forEach((each) =>{each.addEventListener("click", filterInput);
-  document.querySelectorAll("[data-filter=prefects]").forEach((each) =>{each.addEventListener("click", clickPrefect);}); 
+  document.querySelectorAll("[data-filter=prefects]").forEach((each) =>{each.addEventListener("click", filterByPrefect);}); 
+  document.querySelectorAll("[data-filter=squad").forEach((each) =>{each.addEventListener("click", filterBySquad);}); 
 
 }); 
 }
@@ -124,14 +125,12 @@ function triggerButtons(){
 function filterInput(event){
   let filteredList;
   globalObject.filter = event.target.dataset.filter;
-  console.log(globalObject.filter);
   if (globalObject.filter !== "*") {
       filteredList = allStudents.filter(filterBy);
   } else {
       filteredList = allStudents;
   }
   displayList(filteredList);
-  console.log(filteredList);
 }
 
 function filterBy(student){
@@ -143,12 +142,16 @@ function filterBy(student){
   }
 }
  
-  //let prefects; // i made it global so i can call it here
-  function clickPrefect(){
+//let prefects; // i made it global so i can call it here
+function filterByPrefect(){
     globalObject.prefects = allStudents.filter(student => student.prefect);
     displayList(globalObject.prefects);
-    console.log(globalObject.prefects)
-  }
+}
+
+function filterBySquad(){
+  document.querySelector("[data-filter=squad").classList.add("active");
+  displayList(globalObject.squad);
+}
 
 
 // ******* make a prefect *******
@@ -189,17 +192,17 @@ function tryToMakeAPrefect(selectedStudent){
     }
     
     function clickRemoveA(){
-        removePrefect(studentA);
-        makePrefect(studentB);
-        displayList(allStudents);
-        closeDialog();
+     removePrefect(studentA);
+     makePrefect(studentB);
+     displayList(allStudents);
+     closeDialog();
     }
     
     function clickRemoveB(){
-    removePrefect(studentB);
-    makePrefect(studentA);
-    displayList(allStudents);
-    closeDialog();
+     removePrefect(studentB);
+     makePrefect(studentA);
+     displayList(allStudents);
+     closeDialog();
     }
   }
 // common to both solution 1 and 2 (check readme or documentation)
@@ -212,9 +215,6 @@ function tryToMakeAPrefect(selectedStudent){
   }
 }
 
-
-
-
 // ------------- VIEW ------------- 
 //  function buildList() {
 //   const currentList = filterInput(allStudents);
@@ -226,8 +226,12 @@ function displayList(students) {
   // clear the list
   document.querySelector("section.students-list table#list tbody").innerHTML = "";
 
-  // build a new list
+  // check if filters are active
+  if(document.querySelector("[data-filter=squad").classList.contains('active')){
+    globalObject.squad.forEach(displayStudent);
+  } else {
   students.forEach(displayStudent);
+  }
 }
 
 function displayStudent(student) {
@@ -256,8 +260,9 @@ function displayStudent(student) {
   clone.querySelector("[data-field=squad]").addEventListener(`click`, addToSquad);
   
    function addToSquad() {
-      if (student.bloodstatus === "Pure Blood" || student.house === "Slytherin") {
+      if (student.bloodstatus === "Pure-Blood" || student.house === "Slytherin") {
         student.squad = !student.squad;
+        globalObject.squad = allStudents.filter(student => student.squad);
       } else {
         alert("you cannot");
       }

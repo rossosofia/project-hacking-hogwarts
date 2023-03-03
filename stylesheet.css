@@ -90,6 +90,11 @@ button:hover {
   color: var(--black);
 }
 
+.active {
+  background-color: red;
+  color: var(--white);
+}
+
 .search-sort {
   display: flex;
   justify-content: space-between;
@@ -210,8 +215,6 @@ div.shape {
   background-color: #555;
   border-radius: 50%;
 }
-
-
 
 button.closebutton {
   position: absolute;
