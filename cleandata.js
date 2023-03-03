@@ -127,16 +127,29 @@ function triggerButtons(){
 }
 
 // ******* filtering *******
+// selectFilter (set the event as filter)
 function filterInput(event){
-  let filteredList;
-  globalObject.filter = event.target.dataset.filter;
-  if (globalObject.filter !== "*") {
-      filteredList = allStudents.filter(filterBy);
-  } else {
-      filteredList = allStudents;
-  }
-  displayList(filteredList);
+  let filter = event.target.dataset.filter;
+  setFilter(filter);
 }
+
+// setFilter (is taking the filter)
+function setFilter(filter){
+  globalObject.filter = filter;
+  buildList();
+}
+
+
+// filterList (is returning the filter list)
+function filterList(filteredList){
+  if(globalObject.filter !== "*"){
+    filteredList = allStudents.filter(filterBy);
+  } else{ 
+    filteredList = allStudents;
+  }
+  return filteredList;
+}
+
 
 function filterBy(student){
   if(student.house.toLowerCase() === globalObject.filter ){
@@ -151,6 +164,8 @@ function filterByPrefect(){
   //let prefects; // i made it global so i can call it here
     globalObject.prefects = allStudents.filter(student => student.prefect);
     displayList(globalObject.prefects);
+    // console.log(globalObject.filter)
+
 }
 
 function filterBySquad(){
@@ -221,14 +236,16 @@ function tryToMakeAPrefect(selectedStudent){
     function clickRemoveA(){
      removePrefect(studentA);
      makePrefect(studentB);
-     displayList(allStudents);
+    //  displayList(allStudents);
+     buildList();
      closeDialog();
     }
     
     function clickRemoveB(){
      removePrefect(studentB);
      makePrefect(studentA);
-     displayList(allStudents);
+     //  displayList(allStudents);
+     buildList();
      closeDialog();
     }
   }
@@ -239,6 +256,11 @@ function tryToMakeAPrefect(selectedStudent){
   }
   function makePrefect(student){
   student.prefect = true;
+  if (globalObject.filter !== "*"){
+  // console.log(globalObject.filter)
+  buildList();
+  }
+  
   }
 }
 
@@ -250,10 +272,11 @@ function tryToMakeAPrefect(selectedStudent){
 // }
 
 function buildList() {
-  //const currentList = filterInput(allStudents);
-  let sortedList = sortList(allStudents);
+  const currentList = filterList(allStudents);
+  let sortedList = sortList(currentList);
   displayList(sortedList);
-  // console.log(sortedList);
+  // console.log(globalObject.filter);
+  // console.log(currentList);
 }
 
 function displayList(students) {
@@ -271,7 +294,7 @@ function displayList(students) {
 function displayStudent(student) {
   // create clone
   const clone = document.querySelector("template#student").content.cloneNode(true);
-  
+
   // set clone data
   clone.querySelector("#image").src = student.image;
   clone.querySelector("[data-field=firstName]").textContent = student.firstname;
@@ -293,15 +316,15 @@ function displayStudent(student) {
   
   clone.querySelector("[data-field=squad]").addEventListener(`click`, addToSquad);
   
-   function addToSquad() {
+  function addToSquad() {
       if (student.bloodstatus === "Pure-Blood" || student.house === "Slytherin") {
         student.squad = !student.squad;
         globalObject.squad = allStudents.filter(student => student.squad);
       } else {
         alert("you cannot");
       }
-      displayList(allStudents);
-    }
+      buildList();
+  }
 
   //put a student in prefect
   clone.querySelector("[data-field=prefects]").dataset.prefect = student.prefect;
@@ -314,7 +337,8 @@ function displayStudent(student) {
     } else {
       tryToMakeAPrefect(student);
     }
-    displayList(allStudents);
+    // displayList(allStudents);
+    buildList();
   }
 
   clone.querySelector("td #image").addEventListener(`click`, () => {displayStudentCard(student)});
