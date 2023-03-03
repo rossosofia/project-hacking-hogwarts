@@ -3,7 +3,7 @@
 import {getBloodStatus} from "./bloodstatus.js"; 
 
 const allStudents = []; 
-let globalObject ={filter: "*" , prefects:[] , squad:[] };
+let globalObject ={filter: "*" , prefects:[] , squad:[], sortBy: "", sortDir: ""};
 const endpoint = `https://petlatkea.dk/2021/hogwarts/students.json`;
 
 const Student = {
@@ -113,15 +113,20 @@ function putImage(lastname, firstname){
   }
 }
 
-// ******* filtering *******
-function triggerButtons(){
-  document.querySelectorAll(".filter").forEach((each) =>{each.addEventListener("click", filterInput);
-  document.querySelectorAll("[data-filter=prefects]").forEach((each) =>{each.addEventListener("click", filterByPrefect);}); 
-  document.querySelectorAll("[data-filter=squad").forEach((each) =>{each.addEventListener("click", filterBySquad);}); 
+// ******* buttons *******
 
-}); 
+function triggerButtons(){
+  document.querySelectorAll(".filter").forEach((each) =>{each.addEventListener("click", filterInput);}); 
+  document.querySelectorAll("[data-filter=prefects]").forEach((each) =>{each.addEventListener("click", filterByPrefect);}); 
+  document.querySelectorAll("[data-filter=squad]").forEach((each) =>{each.addEventListener("click", filterBySquad);}); 
+  document.querySelector("#sort-options").addEventListener("change", (event) => {
+    let selectedOption = event.target.selectedOptions[0];
+    globalObject.sortBy = selectedOption.dataset.sort;
+    globalObject.sortDir = selectedOption.dataset.sortDirection;
+    buildList()});
 }
 
+// ******* filtering *******
 function filterInput(event){
   let filteredList;
   globalObject.filter = event.target.dataset.filter;
@@ -142,8 +147,8 @@ function filterBy(student){
   }
 }
  
-//let prefects; // i made it global so i can call it here
 function filterByPrefect(){
+  //let prefects; // i made it global so i can call it here
     globalObject.prefects = allStudents.filter(student => student.prefect);
     displayList(globalObject.prefects);
 }
@@ -153,6 +158,28 @@ function filterBySquad(){
   displayList(globalObject.squad);
 }
 
+// ******* sorting *******
+
+function sortList(sortedList){
+  let direction = 1;
+  
+  if(globalObject.sortDir === "desc"){
+    direction = -1;
+  }
+
+  sortedList = sortedList.sort(sortByInput);
+  
+  function sortByInput(studentA, studentB){
+    // console.log(`sorted by ${globalObject.sortBy}`)
+    // this is A-Z
+    if(studentA[globalObject.sortBy] < studentB[globalObject.sortBy]){
+      return -1 * direction;
+     }else{
+      return 1 * direction;
+     }
+ }
+  return sortedList;
+}
 
 // ******* make a prefect *******
 
@@ -221,6 +248,13 @@ function tryToMakeAPrefect(selectedStudent){
 //   //let sortedList = sortList(currentList);
 //  displayList(currentList);
 // }
+
+function buildList() {
+  //const currentList = filterInput(allStudents);
+  let sortedList = sortList(allStudents);
+  displayList(sortedList);
+  // console.log(sortedList);
+}
 
 function displayList(students) {
   // clear the list

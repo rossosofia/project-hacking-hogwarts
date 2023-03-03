@@ -103,9 +103,11 @@
            <div id="drop-down-menu">
              <p>Sort by</p>
              <select id="sort-options">
-                <option value="0">A - Z</option>
-                <option value="1">Z - A</option>
-                <option value="2">Houses</option>
+                <option data-action="sort" data-sort-direction="asc" data-sort="firstname">First name: A - Z</option>
+                <option data-action="sort" data-sort-direction="desc" data-sort="firstname">First name: Z - A</option>
+                <option data-action="sort" data-sort-direction="asc" data-sort="lastname">Last name: A - Z</option>
+                <option data-action="sort" data-sort-direction="desc" data-sort="lastname">Last name: Z - A</option>
+                <option data-action="sort" data-sort-direction="asc" data-sort="house">Houses</option>
              </select>
            </div>
           </section>
