@@ -3,6 +3,7 @@
 import {getBloodStatus} from "./bloodstatus.js"; 
 
 const allStudents = []; 
+let globalObject ={filter: "*" , prefects:[]};
 const endpoint = `https://petlatkea.dk/2021/hogwarts/students.json`;
 
 const Student = {
@@ -18,8 +19,6 @@ const Student = {
   prefect: false
 };
 
-let globalObject = {filter: "*"};
-
 start();
 
 function start() {
@@ -27,7 +26,6 @@ function start() {
   loadJSON();
   triggerButtons();
 }
-
 
 // ------------- MODEL -------------
 function loadJSON() {
@@ -117,7 +115,10 @@ function putImage(lastname, firstname){
 
 // ******* filtering *******
 function triggerButtons(){
-  document.querySelectorAll(".filter").forEach((each) =>{each.addEventListener("click", filterInput)});
+  document.querySelectorAll(".filter").forEach((each) =>{each.addEventListener("click", filterInput);
+  document.querySelectorAll("[data-filter=prefects]").forEach((each) =>{each.addEventListener("click", clickPrefect);}); 
+
+}); 
 }
 
 function filterInput(event){
@@ -130,37 +131,43 @@ function filterInput(event){
       filteredList = allStudents;
   }
   displayList(filteredList);
+  console.log(filteredList);
 }
 
 function filterBy(student){
-  if (student.house.toLowerCase() === globalObject.filter){
-      return true;
+  if(student.house.toLowerCase() === globalObject.filter ){
+    return true
   }
-  
-  if (student.bloodstatus.toLowerCase() === globalObject.filter){
-    return true;
+  if(student.bloodstatus.toLowerCase() === globalObject.filter ){
+    return true
   }
-
-  if (student.prefect.toLowerCase()){
-    return true;
-  }
-  
 }
+ 
+  //let prefects; // i made it global so i can call it here
+  function clickPrefect(){
+    globalObject.prefects = allStudents.filter(student => student.prefect);
+    displayList(globalObject.prefects);
+    console.log(globalObject.prefects)
+  }
 
-// ******* prefect *******
+
+// ******* make a prefect *******
 
 function tryToMakeAPrefect(selectedStudent){
-  const prefects = allStudents.filter(student => student.prefect)
-  // i'm populating sameHouseAndGender when the selected students match the criteria on the return
-  const sameHouseAndGender = prefects.filter(student => student.house === selectedStudent.house && student.gender === selectedStudent.gender).shift();
+  // const prefects = allStudents.filter(student => student.prefect)
+  //i made them global so i can call the display list later
+  globalObject.prefects = allStudents.filter(student => student.prefect);
 
-    // if other is different than undefined, it means that is has been populated
-    if (sameHouseAndGender !== undefined){
-      console.log("Prefects must be a boy and a girl!");
-      removeAorB(sameHouseAndGender, selectedStudent);
-  } else {
-      makePrefect(selectedStudent);
-  }
+   // i'm populating sameHouseAndGender when the selected students match the criteria on the return
+  const sameHouseAndGender = globalObject.prefects.filter(student => student.house === selectedStudent.house && student.gender === selectedStudent.gender).shift();
+
+  // if other is different than undefined, it means that is has been populated 
+  if (sameHouseAndGender !== undefined){
+       console.log("Prefects must be a boy and a girl!");
+       removeAorB(sameHouseAndGender, selectedStudent);
+   } else {
+       makePrefect(selectedStudent);
+   }
 
   function removeAorB(studentA, studentB){
     // show names on buttons
@@ -180,36 +187,40 @@ function tryToMakeAPrefect(selectedStudent){
     document.querySelector("#onlyonekind [data-action=remove1]").removeEventListener("click", clickRemoveA);
     document.querySelector("#onlyonekind [data-action=remove2]").removeEventListener("click", clickRemoveB);
     }
-  
-  function clickRemoveA(){
+    
+    function clickRemoveA(){
         removePrefect(studentA);
         makePrefect(studentB);
-        displayList();
+        displayList(allStudents);
         closeDialog();
     }
-  
-  function clickRemoveB(){
+    
+    function clickRemoveB(){
     removePrefect(studentB);
     makePrefect(studentA);
-    displayList();
+    displayList(allStudents);
     closeDialog();
     }
-  
   }
-
 // common to both solution 1 and 2 (check readme or documentation)
-function removePrefect(student){
+  function removePrefect(student){
   console.log("remove prefect");
   student.prefect = false;
-}
-
-function makePrefect(student){
+  }
+  function makePrefect(student){
   student.prefect = true;
+  }
 }
 
-}
+
+
 
 // ------------- VIEW ------------- 
+//  function buildList() {
+//   const currentList = filterInput(allStudents);
+//   //let sortedList = sortList(currentList);
+//  displayList(currentList);
+// }
 
 function displayList(students) {
   // clear the list
@@ -236,8 +247,10 @@ function displayStudent(student) {
   //add someone to the squad
   if (student.squad) {
     clone.querySelector("[data-field=squad]").innerHTML = "⭐";
+    //console.log("you are a squad member - change star");
   } else {
     clone.querySelector("[data-field=squad]").innerHTML = "☆";
+    //console.log("you are not squad");
   }
   
   clone.querySelector("[data-field=squad]").addEventListener(`click`, addToSquad);
@@ -248,22 +261,21 @@ function displayStudent(student) {
       } else {
         alert("you cannot");
       }
-      displayList();
+      displayList(allStudents);
     }
-  
-  
+
   //put a student in prefect
   clone.querySelector("[data-field=prefects]").dataset.prefect = student.prefect;
-  clone.querySelector("[data-field=prefects]").addEventListener(`click`, makePrefect);
+  clone.querySelector("[data-field=prefects]").addEventListener(`click`, isPrefect);
   
-  function makePrefect(){
+  function isPrefect(){
     // untoggle a prefect is always possible, but not toggle it (2 winners for each category)
     if(student.prefect === true){
       student.prefect = false;
     } else {
       tryToMakeAPrefect(student);
     }
-    displayList();
+    displayList(allStudents);
   }
 
   clone.querySelector("td #image").addEventListener(`click`, () => {displayStudentCard(student)});
@@ -303,6 +315,5 @@ function displayStudentCard(student){
   function closeStudentCard(){
   popup.classList.add("hide");
   popup.querySelector("#dialog").classList = "";
-  // popup.querySelector(".closebutton").removeEventListener("click", closeStudentCard());
   }
 }
