@@ -149,6 +149,11 @@ td[data-field="prefects"][data-prefect="false"]::after {
   filter: grayscale(1);
 }
 
+/* student list */
+
+article#sigle-student {
+  background-color: var(--dirty-white);
+}
 /* dialog */
 
 .modal {

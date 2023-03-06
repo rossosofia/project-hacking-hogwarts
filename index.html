@@ -114,8 +114,9 @@
         </section>
 
         <section class="students-list">
-          <table id="list">
-              <thead>
+
+          <!-- <table id="list"> -->
+              <!-- <thead>
                 <tr>
                   <th>Inquisitorial Squa</th>
                   <th>Prefects</th>
@@ -129,10 +130,10 @@
                   <th>Blood Status</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody> -->
                 <!-- student's template will be copied and inserted here -->
-              </tbody>
-          </table>
+              <!-- </tbody> -->
+          <!-- </table>
           <template id="student">
               <tr class="student-row">
                 <td data-field="squad"></td>
@@ -146,12 +147,23 @@
                 <td data-field="house">House</td>
                 <td data-field="bloodStatus"></td>
               </tr>
-          </template>
+          </template> -->
         </section>
 
       </div>
     </main>
 
+    <template id="student">
+      <article id="single-student">
+       <img id="image" src="images/bones_s.png" alt="propic"/>
+       <div>
+         <p data-field="firstName">First Name</p>
+         <p data-field="middleName">Middle Name</p>
+         <p data-field="lastName">Last Name</p>
+       </div>
+       <p data-field="house">House</p>
+      </article>
+  </template>
     <!-- dialogs -->
     <div id="onlyonekind" class="modal hide">
       <div class="dialog">

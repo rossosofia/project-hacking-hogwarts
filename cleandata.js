@@ -66,7 +66,7 @@ function prepareObjects(jsonData) {
 
 function buildList() {
   const currentList = filterList(allStudents);
-  console.log(currentList);
+  // console.log(currentList);
   let sortedList = sortList(currentList);
   displayList(sortedList);
   // console.log(globalObject.filter);
@@ -75,9 +75,9 @@ function buildList() {
 
 function displayList(students) {
   // clear the list
-  document.querySelector("section.students-list table#list tbody").innerHTML = "";
+  document.querySelector("section.students-list").innerHTML = "";
 
-  // check if filters are active
+  // check if filters are active (working only fro squad)
   if(document.querySelector("[data-filter=squad").classList.contains('active')){
     globalObject.squad.forEach(displayStudent);
   } else {
@@ -93,52 +93,52 @@ function displayStudent(student) {
   clone.querySelector("#image").src = student.image;
   clone.querySelector("[data-field=firstName]").textContent = student.firstname;
   clone.querySelector("[data-field=middleName]").textContent = student.middlename;
-  clone.querySelector("[data-field=nickName").textContent = student.nickname;
+  // clone.querySelector("[data-field=nickName").textContent = student.nickname;
   clone.querySelector("[data-field=lastName]").textContent = student.lastname;
-  clone.querySelector("[data-field=gender").textContent = student.gender;
   clone.querySelector("[data-field=house]").textContent = student.house;
-  clone.querySelector("[data-field=bloodStatus]").textContent = student.bloodstatus;
+  // clone.querySelector("[data-field=gender").textContent = student.gender;
+  // clone.querySelector("[data-field=bloodStatus]").textContent = student.bloodstatus;
   
   //add someone to the squad
-  if (student.squad) {
-    clone.querySelector("[data-field=squad]").innerHTML = "⭐";
-    //console.log("you are a squad member - change star");
-  } else {
-    clone.querySelector("[data-field=squad]").innerHTML = "☆";
-    //console.log("you are not squad");
-  }
+  // if (student.squad) {
+  //   clone.querySelector("[data-field=squad]").innerHTML = "⭐";
+  //   //console.log("you are a squad member - change star");
+  // } else {
+  //   clone.querySelector("[data-field=squad]").innerHTML = "☆";
+  //   //console.log("you are not squad");
+  // }
   
-  clone.querySelector("[data-field=squad]").addEventListener(`click`, addToSquad);
+  // clone.querySelector("[data-field=squad]").addEventListener(`click`, addToSquad);
   
-  function addToSquad() {
-      if (student.bloodstatus === "Pure-Blood" || student.house === "Slytherin") {
-        student.squad = !student.squad;
-        globalObject.squad = allStudents.filter(student => student.squad);
-      } else {
-        alert("you cannot");
-      }
-      buildList();
-  }
+  // function addToSquad() {
+  //     if (student.bloodstatus === "Pure-Blood" || student.house === "Slytherin") {
+  //       student.squad = !student.squad;
+  //       globalObject.squad = allStudents.filter(student => student.squad);
+  //     } else {
+  //       alert("you cannot");
+  //     }
+  //     buildList();
+  // }
 
   //put a student in prefect
-  clone.querySelector("[data-field=prefects]").dataset.prefect = student.prefect;
-  clone.querySelector("[data-field=prefects]").addEventListener(`click`, isPrefect);
+  // clone.querySelector("[data-field=prefects]").dataset.prefect = student.prefect;
+  // clone.querySelector("[data-field=prefects]").addEventListener(`click`, isPrefect);
   
-  function isPrefect(){
-    // untoggle a prefect is always possible, but not toggle it (2 winners for each category)
-    if(student.prefect === true){
-      student.prefect = false;
-    } else {
-      tryToMakeAPrefect(student);
-    }
-    // displayList(allStudents);
-    buildList();
-  }
+  // function isPrefect(){
+  //   // untoggle a prefect is always possible, but not toggle it (2 winners for each category)
+  //   if(student.prefect === true){
+  //     student.prefect = false;
+  //   } else {
+  //     tryToMakeAPrefect(student);
+  //   }
+  //   // displayList(allStudents);
+  //   buildList();
+  // }
 
-  clone.querySelector("td #image").addEventListener(`click`, () => {displayStudentCard(student)});
+  clone.querySelector("article#single-student").addEventListener(`click`, () => {displayStudentCard(student)});
   
   // append clone to list
-  document.querySelector("#list tbody").appendChild(clone);
+  document.querySelector(".students-list").appendChild(clone);
   
 }
 
@@ -391,11 +391,17 @@ function tryToMakeAPrefect(selectedStudent){
 // right now it's searching inside the entire student row, we need to narrow it down to only name, surname e nickname
 function liveSearch() {
   // Locate the card elements
-  let studentRow = document.querySelectorAll('.student-row');
+  let studentRow = document.querySelectorAll('.single-student');
 
   // Locate the search input
   let searchBar = document.getElementById("searchbox").value;
-  
+
+  // const studentFullName = allStudents.filter(student => {
+  //   let fullname = `${student.firstname}` + `${student.lastname}`;
+  //   return fullname})
+    
+  // displayList(filteredList);
+
   // Loop through the cards
   for (var i = 0; i < studentRow.length; i++) {
     // If the text is within the card, and the text matches the search query, remove the `.is-hidden` class.
@@ -406,5 +412,4 @@ function liveSearch() {
     // Otherwise, add the class.
     studentRow[i].classList.add("hide");
   }
-}
-}
+  }}
