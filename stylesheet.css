@@ -153,29 +153,56 @@ td[data-field="prefects"][data-prefect="false"]::after {
 
 .students-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  /* grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); */
+  grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 1rem;
+  padding-top: 1rem;
 }
 
-div#single-student {
-  background: var(--opaque-black);
+#single-student img {
+  max-width: 80%;
+  max-height: 80%;
+}
+
+#single-student {
   display: flex;
   flex-direction: row;
-  /* flex-wrap: wrap; */
-  /* border-radius: 10%; */
-  padding: 1rem;
-  max-height: 20%;
+  flex-wrap: nowrap;
+  gap: 0.5rem;
+  justify-content: left;
+  align-items: center;
+  padding: 0.5rem 1rem 0.5rem 1rem;
+  border-radius: 1rem;
+  max-height: 4rem;
 }
 
-div#single-student img {
-  /* max-width: 50%;
-  max-height: 50%; */
+#single-student.hidden {
+  display: none;
 }
 
-div#student-info {
+#single-student.gryffindor {
+  border: solid 0.8px red;
+}
+
+#single-student.slytherin {
+  border: solid 0.8px green;
+}
+
+#single-student.hufflepuff {
+  border: solid 0.8px yellow;
+}
+
+#single-student.ravenclaw {
+  border: solid 0.8px blue;
+}
+
+#student-fullname {
   display: flex;
-  flex-direction: row;
   gap: 0.2rem;
+}
+
+#student-fullname p {
+  font-size: 0.8rem;
 }
 
 /* dialog */

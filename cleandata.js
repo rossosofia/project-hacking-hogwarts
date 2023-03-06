@@ -66,11 +66,8 @@ function prepareObjects(jsonData) {
 
 function buildList() {
   const currentList = filterList(allStudents);
-  // console.log(currentList);
   let sortedList = sortList(currentList);
   displayList(sortedList);
-  // console.log(globalObject.filter);
-  // console.log(currentList);
 }
 
 function displayList(students) {
@@ -92,13 +89,23 @@ function displayStudent(student) {
   // set clone data
   clone.querySelector("#image").src = student.image;
   clone.querySelector("[data-field=firstName]").textContent = student.firstname;
-  clone.querySelector("[data-field=middleName]").textContent = student.middlename;
+  // clone.querySelector("[data-field=middleName]").textContent = student.middlename;
   // clone.querySelector("[data-field=nickName").textContent = student.nickname;
   clone.querySelector("[data-field=lastName]").textContent = student.lastname;
-  clone.querySelector("[data-field=house]").textContent = student.house;
+  // clone.querySelector("#single-student").classList.add(student.house);
   // clone.querySelector("[data-field=gender").textContent = student.gender;
   // clone.querySelector("[data-field=bloodStatus]").textContent = student.bloodstatus;
-  
+
+  if(student.house === "Gryffindor"){
+    clone.querySelector("#single-student").classList.add("gryffindor");
+  }else if(student.house === "Slytherin"){
+    clone.querySelector("#single-student").classList.add("slytherin");
+  }else if(student.house === "Ravenclaw"){
+    clone.querySelector("#single-student").classList.add("ravenclaw");
+
+  }else{
+    clone.querySelector("#single-student").classList.add("hufflepuff");
+  }
   //add someone to the squad
   // if (student.squad) {
   //   clone.querySelector("[data-field=squad]").innerHTML = "⭐";
@@ -307,7 +314,6 @@ function sortList(sortedList){
   sortedList = sortedList.sort(sortByInput);
   
   function sortByInput(studentA, studentB){
-    // console.log(`sorted by ${globalObject.sortBy}`)
     // this is A-Z
     if(studentA[globalObject.sortBy] < studentB[globalObject.sortBy]){
       return -1 * direction;
@@ -391,25 +397,20 @@ function tryToMakeAPrefect(selectedStudent){
 // right now it's searching inside the entire student row, we need to narrow it down to only name, surname e nickname
 function liveSearch() {
   // Locate the card elements
-  let studentRow = document.querySelectorAll('.single-student');
+  let studentRow = document.querySelectorAll('#single-student');
+  let studentName = document.querySelectorAll('#student-fullname');
 
   // Locate the search input
   let searchBar = document.getElementById("searchbox").value;
 
-  // const studentFullName = allStudents.filter(student => {
-  //   let fullname = `${student.firstname}` + `${student.lastname}`;
-  //   return fullname})
-    
-  // displayList(filteredList);
-
   // Loop through the cards
   for (let i = 0; i < studentRow.length; i++) {
     // If the text is within the card, and the text matches the search query, remove the `.is-hidden` class.
-    if(studentRow[i].innerText.toLowerCase().includes(searchBar.toLowerCase())){
+    if(studentName[i].innerText.toLowerCase().includes(searchBar.toLowerCase())){
       // we need to keep "remove hide" so that it keeps searching also when we delete a letter
-      studentRow[i].classList.remove("hide");
+      studentRow[i].classList.remove("hidden");
   } else {
     // Otherwise, add the class.
-    studentRow[i].classList.add("hide");
+    studentRow[i].classList.add("hidden");
   }
   }}
