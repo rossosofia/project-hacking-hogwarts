@@ -403,7 +403,7 @@ function liveSearch() {
   // displayList(filteredList);
 
   // Loop through the cards
-  for (var i = 0; i < studentRow.length; i++) {
+  for (let i = 0; i < studentRow.length; i++) {
     // If the text is within the card, and the text matches the search query, remove the `.is-hidden` class.
     if(studentRow[i].innerText.toLowerCase().includes(searchBar.toLowerCase())){
       // we need to keep "remove hide" so that it keeps searching also when we delete a letter
