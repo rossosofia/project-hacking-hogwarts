@@ -135,7 +135,7 @@ function displayStudent(student) {
   //   buildList();
   // }
 
-  clone.querySelector("article#single-student").addEventListener(`click`, () => {displayStudentCard(student)});
+  clone.querySelector("div#single-student").addEventListener(`click`, () => {displayStudentCard(student)});
   
   // append clone to list
   document.querySelector(".students-list").appendChild(clone);
