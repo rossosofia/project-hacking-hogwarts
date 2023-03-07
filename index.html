@@ -155,16 +155,23 @@
       </div>
     </div>
 
-<!-- <template id="student-card-template"> -->
+<!-- student card modal - popup window -->
     <div id="student-card" class="modal hide">
       <article id="dialog">
         <button class="closebutton">X</button>
         <div class="popup-body">
-        <div class="popup-column">
-         <img id="image" src="images/bones_s.png" alt="student-pic"/>
-         <button id="status">Enrolled</button>
-         <p>-</p>
-        </div>
+
+         <div class="popup-column">
+           <img id="image" src="images/bones_s.png" alt="student-pic"/>
+           <button id="status" class="active">Enrolled</button>
+           <br><br>
+           <button id="status" data-field="prefects" >Make Prefect</button>
+           <br>
+           <button id="status" data-field="squad">-</button>
+          </div>
+
+
+
         <div class="popup-column">
           <div>
             <p class="info">First Name</p>
@@ -200,11 +207,6 @@
           <div>
            <p class="info">Gender</p>
            <p data-field="gender">-</p>
-          </div>
-          <div>
-           <p class="info">Roles</p>
-           <p data-field="squad"></p>
-           <p data-field="prefects" data-prefect="false"></p>
           </div>
         </div>
       </pop-body>

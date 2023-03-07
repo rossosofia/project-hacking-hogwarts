@@ -74,12 +74,12 @@ function displayList(students) {
   // clear the list
   document.querySelector("section.students-list").innerHTML = "";
 
-  // check if filters are active (working only fro squad)
-  if(document.querySelector("[data-filter=squad").classList.contains('active')){
-    globalObject.squad.forEach(displayStudent);
-  } else {
+  // check if filters are active (working only for squad)
+  // if(document.querySelector("[data-filter=squad").classList.contains('active')){
+  //   globalObject.squad.forEach(displayStudent);
+  // } else {
   students.forEach(displayStudent);
-  }
+  // }
 }
 
 function displayStudent(student) {
@@ -91,15 +91,6 @@ function displayStudent(student) {
   clone.querySelector("[data-field=firstName]").textContent = student.firstname;
   clone.querySelector("[data-field=lastName]").textContent = student.lastname;
   clone.querySelector("#blood-status-icon").src= `images/icon-${student.bloodstatus}.svg`;
-  // clone.querySelector("#squad-icon").src= `images/icon-${student.bloodstatus}.svg`;
-  // clone.querySelector("#prefect-icon").src= `images/icon-${student.bloodstatus}.svg`;
-
-  // clone.querySelector("[data-field=middleName]").textContent = student.middlename;
-  // clone.querySelector("[data-field=nickName").textContent = student.nickname;
-  // clone.querySelector("#single-student").classList.add(student.house);
-  // clone.querySelector("[data-field=gender").textContent = student.gender;
-  // clone.querySelector("[data-field=bloodStatus]").textContent = student.bloodstatus;
-
 
   if(student.house === "Gryffindor"){
     clone.querySelector("#single-student").classList.add("gryffindor");
@@ -110,42 +101,17 @@ function displayStudent(student) {
   }else{
     clone.querySelector("#single-student").classList.add("hufflepuff");
   }
-  //add someone to the squad
-  // if (student.squad) {
-  //   clone.querySelector("[data-field=squad]").innerHTML = "⭐";
-  //   //console.log("you are a squad member - change star");
-  // } else {
-  //   clone.querySelector("[data-field=squad]").innerHTML = "☆";
-  //   //console.log("you are not squad");
-  // }
-  
-  // clone.querySelector("[data-field=squad]").addEventListener(`click`, addToSquad);
-  
-  // function addToSquad() {
-  //     if (student.bloodstatus === "Pure-Blood" || student.house === "Slytherin") {
-  //       student.squad = !student.squad;
-  //       globalObject.squad = allStudents.filter(student => student.squad);
-  //     } else {
-  //       alert("you cannot");
-  //     }
-  //     buildList();
-  // }
 
-  //put a student in prefect
-  // clone.querySelector("[data-field=prefects]").dataset.prefect = student.prefect;
-  // clone.querySelector("[data-field=prefects]").addEventListener(`click`, isPrefect);
-  
-  // function isPrefect(){
-  //   // untoggle a prefect is always possible, but not toggle it (2 winners for each category)
-  //   if(student.prefect === true){
-  //     student.prefect = false;
-  //   } else {
-  //     tryToMakeAPrefect(student);
-  //   }
-  //   // displayList(allStudents);
-  //   buildList();
-  // }
+  if (student.squad) {
+    clone.querySelector("#squad-icon").classList.remove("hide");
+  }
 
+  if (student.prefect) {
+    clone.querySelector("#prefect-icon").classList.remove("hide");
+  }
+
+  // clone.querySelector("[data-field=gender").textContent = student.gender;
+  
   clone.querySelector("div#single-student").addEventListener(`click`, () => {displayStudentCard(student)});
   
   // append clone to list
@@ -178,14 +144,61 @@ function displayStudentCard(student){
     popup.querySelector("#dialog").classList.add("hufflepuff");
   }
 
-  popup.querySelector(".closebutton").addEventListener('click', closeStudentCard);
+  // Define squad status
+  if (student.squad) {
+    popup.querySelector("[data-field=squad]").textContent = "Squad";
+    popup.querySelector("[data-field=squad]").classList.add("active");
+  } else {
+    popup.querySelector("[data-field=squad]").textContent = "Add to Squad";
+    popup.querySelector("[data-field=squad]").classList.remove("active");
+  }
+  // function to add or remove squad
+  popup.querySelector("[data-field=squad]").addEventListener(`click`, addToSquad);
   
+  function addToSquad() {
+    if (student.bloodstatus === "Pure-Blood" || student.house === "Slytherin") {
+        student.squad = !student.squad;
+        globalObject.squad = allStudents.filter(student => student.squad);
+    } else {
+    alert("you cannot");
+    }
+    buildList();
+    displayStudentCard(student);
+    }
+
+  // Define Prefect status
+  if (student.prefect) {
+    popup.querySelector("[data-field=prefects]").textContent = "Prefect";
+    popup.querySelector("[data-field=prefects]").classList.add("active");
+  } else {
+    popup.querySelector("[data-field=prefects]").textContent = "Add to Prefects";
+    popup.querySelector("[data-field=prefects]").classList.remove("active");
+  }
+  
+  popup.querySelector("[data-field=prefects]").addEventListener(`click`, isPrefect);
+    
+  // function to add or remove prefect
+  function isPrefect(){
+    // untoggle a prefect is always possible, but not toggle it (2 winners for each category)
+    if(student.prefect === true){
+      student.prefect = false;
+    } else {
+      tryToMakeAPrefect(student);
+      displayStudentCard(student);
+    }
+    
+  popup.querySelector(".closebutton").addEventListener('click', closeStudentCard);
+
+  // displayList(allStudents);
+  buildList();
+  }
+
   function closeStudentCard(){
   popup.classList.add("hide");
   popup.querySelector("#dialog").classList = "";
   }
-}
 
+}
 
 // ------------- CONTROLLER -------------
 // ******* clean data *******
@@ -255,7 +268,6 @@ function triggerButtons(){
     globalObject.sortDir = selectedOption.dataset.sortDirection;
     buildList()});
     document.querySelector("#searchbox").addEventListener("input", liveSearch);
-
 }
 
 // ******* filtering *******
