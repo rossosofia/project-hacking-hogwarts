@@ -221,13 +221,35 @@ td[data-field="prefects"][data-prefect="false"]::after {
 }
 
 #dialog {
+  background-color: var(--dirty-white);
   box-shadow: 1px 1px 10px #333;
   border-radius: 12px;
   padding: 2em;
-  background-color: var(--dirty-white);
   position: relative;
   width: 30%;
 }
+
+.warning-dialog {
+  background-color: var(--opaque-black);
+  /* box-shadow: 1px 1px 10px #333; */
+  border-radius: 12px;
+  padding: 1rem;
+  position: relative;
+  width: 30%;
+  color: var(--dirty-white);
+  text-align: center;
+}
+
+.warning-dialog h1 {
+  font-size: 1.5rem;
+}
+
+h2 {
+  font-size: 0.7rem;
+  font-weight: 300;
+}
+
+/* POPUP BUTTONS */
 
 #status {
   background-color: #9c9c9c;
@@ -255,7 +277,6 @@ button#status:nth-of-type(1):hover {
   border: solid 1px red;
   color: var(--opaque-black);
 }
-
 
 p.info {
   font-size: 10pt;
@@ -291,8 +312,6 @@ p.info {
 
 #prefect-icon {
   height: 1rem;
-}
-.popup-column div {
 }
 
 .popup-column div p:nth-of-type(2),

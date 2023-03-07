@@ -52,7 +52,7 @@ function prepareObjects(jsonData) {
     student.bloodstatus = getBloodStatus(everyName.lastName);
 
     
-    allStudents.push(student);});
+  allStudents.push(student);});
 
   displayList(allStudents);
 }
@@ -122,7 +122,8 @@ function displayStudent(student) {
 function displayStudentCard(student){
   const popup = document.querySelector("#student-card");
   popup.classList.remove("hide");
-  
+  popup.querySelector("#dialog").classList = "";
+
   popup.querySelector("#image").src = student.image;
   popup.querySelector("[data-field=firstName]").textContent = student.firstname;
   popup.querySelector("[data-field=middleName]").textContent = student.middlename;
@@ -131,7 +132,8 @@ function displayStudentCard(student){
   popup.querySelector("[data-field=gender").textContent = student.gender;
   popup.querySelector("[data-field=house]").textContent = student.house;
   popup.querySelector("[data-field=bloodStatus]").textContent = student.bloodstatus;
-  
+  popup.querySelector("[data-field=prefects]").dataset.prefect = student.prefect;
+
   if(student.house === "Gryffindor"){
     popup.querySelector("#dialog").classList.add("gryffindor");
 
@@ -144,6 +146,7 @@ function displayStudentCard(student){
     popup.querySelector("#dialog").classList.add("hufflepuff");
   }
 
+  // ******* SQUAD *******
   // Define squad status
   if (student.squad) {
     popup.querySelector("[data-field=squad]").textContent = "Squad";
@@ -152,9 +155,16 @@ function displayStudentCard(student){
     popup.querySelector("[data-field=squad]").textContent = "Add to Squad";
     popup.querySelector("[data-field=squad]").classList.remove("active");
   }
-  // function to add or remove squad
+
+  //add eventListeners
+  popup.querySelector("[data-field=prefects]").addEventListener(`click`, isPrefect);
   popup.querySelector("[data-field=squad]").addEventListener(`click`, addToSquad);
   
+// function removeEventListeners(){
+//   popup.querySelector("[data-field=prefects]").removeEventListener(`click`, isPrefect);
+//   popup.querySelector("[data-field=squad]").removeEventListener(`click`, addToSquad);
+// }
+
   function addToSquad() {
     if (student.bloodstatus === "Pure-Blood" || student.house === "Slytherin") {
         student.squad = !student.squad;
@@ -166,7 +176,10 @@ function displayStudentCard(student){
     displayStudentCard(student);
     }
 
+
+  // ******* PREFECT *******
   // Define Prefect status
+
   if (student.prefect) {
     popup.querySelector("[data-field=prefects]").textContent = "Prefect";
     popup.querySelector("[data-field=prefects]").classList.add("active");
@@ -174,9 +187,9 @@ function displayStudentCard(student){
     popup.querySelector("[data-field=prefects]").textContent = "Add to Prefects";
     popup.querySelector("[data-field=prefects]").classList.remove("active");
   }
+
+  popup.querySelector(".closebutton").addEventListener('click', closeStudentCard);
   
-  popup.querySelector("[data-field=prefects]").addEventListener(`click`, isPrefect);
-    
   // function to add or remove prefect
   function isPrefect(){
     // untoggle a prefect is always possible, but not toggle it (2 winners for each category)
@@ -184,20 +197,15 @@ function displayStudentCard(student){
       student.prefect = false;
     } else {
       tryToMakeAPrefect(student);
-      displayStudentCard(student);
     }
-    
-  popup.querySelector(".closebutton").addEventListener('click', closeStudentCard);
-
-  // displayList(allStudents);
-  buildList();
+    buildList();
+    displayStudentCard(student);
   }
 
   function closeStudentCard(){
   popup.classList.add("hide");
   popup.querySelector("#dialog").classList = "";
   }
-
 }
 
 // ------------- CONTROLLER -------------
@@ -294,7 +302,6 @@ function filterList(filteredList){
   return filteredList;
 }
 
-
 function filterBy(student){
   if(student.house.toLowerCase() === globalObject.filter ){
     return true
@@ -343,6 +350,7 @@ function sortList(sortedList){
 // ******* make a prefect *******
 
 function tryToMakeAPrefect(selectedStudent){
+  console.log("I'm in trytomakeaprefect");
   // const prefects = allStudents.filter(student => student.prefect)
   //i made them global so i can call the display list later
   globalObject.prefects = allStudents.filter(student => student.prefect);
@@ -359,6 +367,7 @@ function tryToMakeAPrefect(selectedStudent){
    }
 
   function removeAorB(studentA, studentB){
+    document.querySelector("#onlyonekind h1 span").textContent =`${studentB.firstname}`;
     // show names on buttons
     document.querySelector("#onlyonekind [data-action=remove1] span").textContent =`${studentA.firstname}`;
     document.querySelector("#onlyonekind [data-action=remove2] span").textContent = `${studentB.firstname}`;
@@ -398,11 +407,11 @@ function tryToMakeAPrefect(selectedStudent){
   console.log("remove prefect");
   student.prefect = false;
   }
+
   function makePrefect(student){
   student.prefect = true;
   if (globalObject.filter !== "*"){
-  // console.log(globalObject.filter)
-  buildList();
+    buildList();
   }
   
   }

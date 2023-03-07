@@ -120,7 +120,9 @@
       </div>
     </main>
 
-<!-- template student list card -->
+
+
+  <!-- template student list card -->
   <template id="student">
       <div id="single-student">
         <div id="student-fullname">
@@ -136,42 +138,17 @@
       </div>
   </template>
 
-<!-- dialogs -->
-    <div id="onlyonekind" class="modal hide">
-      <div class="dialog">
-        <button class="closebutton">X</button>
-        <h1>Warning!</h1>
-        <h2>
-          You can only have one prefect of each gender. <br />Remove one.
-        </h2>
-        <p>
-          <button data-action="remove1">
-            remove <span class="student1"></span>
-          </button>
-          <button data-action="remove2">
-            remove <span class="student2"></span>
-          </button>   
-        </p>
-      </div>
-    </div>
-
-<!-- student card modal - popup window -->
-    <div id="student-card" class="modal hide">
+  <!-- student card modal - popup window -->
+  <div id="student-card" class="modal hide">
       <article id="dialog">
         <button class="closebutton">X</button>
         <div class="popup-body">
-
          <div class="popup-column">
            <img id="image" src="images/bones_s.png" alt="student-pic"/>
-           <button id="status" class="active">Enrolled</button>
-           <br><br>
-           <button id="status" data-field="prefects" >Make Prefect</button>
-           <br>
-           <button id="status" data-field="squad">-</button>
-          </div>
-
-
-
+           <button id="status" class="active" >Enrolled</button>
+           <button id="status" data-field="prefects">Make Prefect</button>
+           <button id="status" data-field="squad">Add to Squad</button>
+        </div>
         <div class="popup-column">
           <div>
             <p class="info">First Name</p>
@@ -209,9 +186,26 @@
            <p data-field="gender">-</p>
           </div>
         </div>
-      </pop-body>
       </article>
+  </div>
+
+  <!-- dialogs -->
+  <div id="onlyonekind" class="modal hide">
+    <div class="warning-dialog">
+      <button class="closebutton">X</button>
+      <h1><span>Name</span> can't be prefect.</h1>
+      <h2>
+        You can only have one prefect of each gender. <br />Remove one.
+      </h2>
+      <p>
+        <button data-action="remove1">
+          remove <span class="student1"></span>
+        </button>
+        <button data-action="remove2">
+          remove <span class="student2"></span>
+        </button>   
+      </p>
     </div>
-  <!-- </template> -->
-  </body>
+  </div>
+ </body>
 </html>
