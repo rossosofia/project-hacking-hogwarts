@@ -159,9 +159,9 @@ td[data-field="prefects"][data-prefect="false"]::after {
   padding-top: 1rem;
 }
 
-#single-student img {
-  max-width: 80%;
-  max-height: 80%;
+#student-fullname img {
+  width: 3rem;
+  height: 3rem;
 }
 
 #single-student {
@@ -169,8 +169,8 @@ td[data-field="prefects"][data-prefect="false"]::after {
   flex-direction: row;
   flex-wrap: nowrap;
   gap: 0.5rem;
-  justify-content: left;
   align-items: center;
+  justify-content: space-between;
   padding: 0.5rem 1rem 0.5rem 1rem;
   border-radius: 1rem;
   max-height: 4rem;
@@ -198,6 +198,7 @@ td[data-field="prefects"][data-prefect="false"]::after {
 
 #student-fullname {
   display: flex;
+  align-items: center;
   gap: 0.2rem;
 }
 
@@ -252,6 +253,24 @@ p.info {
   display: flex;
   align-items: center;
   gap: 0.1rem;
+}
+
+#roles {
+  display: flex;
+  flex-direction: row;
+  gap: 0.2rem;
+}
+
+#blood-status-icon {
+  height: 1rem;
+}
+
+#squad-icon {
+  height: 1rem;
+}
+
+#prefect-icon {
+  height: 1rem;
 }
 
 .popup-column div p:nth-of-type(2),

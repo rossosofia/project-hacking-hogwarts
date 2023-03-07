@@ -100,6 +100,7 @@
           </section>
           <section class="search-sort">
            <input type="search" id="searchbox" placeholder="Type a name here..." />
+           <button class="filter" data-action="filter" data-filter="*"> Remove all filters </button>
            <div id="drop-down-menu">
              <select id="sort-options">
                 <option>Sort by:</option>
@@ -122,12 +123,17 @@
 <!-- template student list card -->
   <template id="student">
       <div id="single-student">
-       <img id="image" src="images/bones_s.png" alt="propic"/>
         <div id="student-fullname">
+          <img id="image" src="images/bones_s.png" alt="propic"/>
          <p data-field="firstName">First Name</p>
-         <!-- <p data-field="middleName">Middle Name</p> -->
          <p data-field="lastName">Last Name</p>
         </div>
+        <div id="roles">
+          <img id="squad-icon" class="hide" src="images/icon-squad.svg" alt="squad-icon">
+          <img id="prefect-icon" class="hide" src="images/icon-prefect.svg" alt="prefect-icon">
+          <img id="blood-status-icon" src="images/icon-pure-blood.svg" alt="blood-status-icon">
+        </div>
+      </div>
   </template>
 
 <!-- dialogs -->

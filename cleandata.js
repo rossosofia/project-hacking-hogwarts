@@ -89,12 +89,17 @@ function displayStudent(student) {
   // set clone data
   clone.querySelector("#image").src = student.image;
   clone.querySelector("[data-field=firstName]").textContent = student.firstname;
+  clone.querySelector("[data-field=lastName]").textContent = student.lastname;
+  clone.querySelector("#blood-status-icon").src= `images/icon-${student.bloodstatus}.svg`;
+  // clone.querySelector("#squad-icon").src= `images/icon-${student.bloodstatus}.svg`;
+  // clone.querySelector("#prefect-icon").src= `images/icon-${student.bloodstatus}.svg`;
+
   // clone.querySelector("[data-field=middleName]").textContent = student.middlename;
   // clone.querySelector("[data-field=nickName").textContent = student.nickname;
-  clone.querySelector("[data-field=lastName]").textContent = student.lastname;
   // clone.querySelector("#single-student").classList.add(student.house);
   // clone.querySelector("[data-field=gender").textContent = student.gender;
   // clone.querySelector("[data-field=bloodStatus]").textContent = student.bloodstatus;
+
 
   if(student.house === "Gryffindor"){
     clone.querySelector("#single-student").classList.add("gryffindor");
@@ -102,7 +107,6 @@ function displayStudent(student) {
     clone.querySelector("#single-student").classList.add("slytherin");
   }else if(student.house === "Ravenclaw"){
     clone.querySelector("#single-student").classList.add("ravenclaw");
-
   }else{
     clone.querySelector("#single-student").classList.add("hufflepuff");
   }
@@ -409,8 +413,9 @@ function liveSearch() {
     if(studentName[i].innerText.toLowerCase().includes(searchBar.toLowerCase())){
       // we need to keep "remove hide" so that it keeps searching also when we delete a letter
       studentRow[i].classList.remove("hidden");
-  } else {
+    } else {
     // Otherwise, add the class.
     studentRow[i].classList.add("hidden");
+    }
   }
-  }}
+}
