@@ -3,7 +3,10 @@
 import {getBloodStatus} from "./bloodstatus.js"; 
 
 const allStudents = []; 
+const expelledStudents = []; 
+
 let globalObject ={filter: "*" , prefects:[] , squad:[], sortBy: "", sortDir: ""};
+
 const endpoint = `https://petlatkea.dk/2021/hogwarts/students.json`;
 
 const Student = {
@@ -25,7 +28,6 @@ function start() {
   console.log("ready");
   loadJSON();
   triggerButtons();
-
 }
 
 // ------------- MODEL -------------
@@ -53,16 +55,16 @@ function prepareObjects(jsonData) {
 
     
   allStudents.push(student);});
-
   displayList(allStudents);
+  showNumbers();
 }
 
 // ------------- VIEW ------------- 
-//  function buildList() {
-//   const currentList = filterInput(allStudents);
-//   //let sortedList = sortList(currentList);
-//  displayList(currentList);
-// }
+function showNumbers(){
+  document.querySelector(".total-numbers .enrolled span").textContent = allStudents.length;
+  document.querySelector(".total-numbers .expelled span").textContent = expelledStudents.length;
+
+  }
 
 function buildList() {
   const currentList = filterList(allStudents);
@@ -83,6 +85,7 @@ function displayList(students) {
 }
 
 function displayStudent(student) {
+
   // create clone
   const clone = document.querySelector("template#student").content.cloneNode(true);
 
@@ -114,6 +117,11 @@ function displayStudent(student) {
   
   clone.querySelector("div#single-student").addEventListener(`click`, () => {displayStudentCard(student)});
   
+  document.querySelector(".house-Gryffindor span").textContent = allStudents.filter(student => student.house==="Gryffindor").length;
+  document.querySelector(".house-Slytherin span").textContent = allStudents.filter(student => student.house==="Slytherin").length;
+  document.querySelector(".house-Ravenclaw span").textContent = allStudents.filter(student => student.house==="Ravenclaw").length;
+  document.querySelector(".house-Hufflepuff span").textContent = allStudents.filter(student => student.house==="Hufflepuff").length;
+
   // append clone to list
   document.querySelector(".students-list").appendChild(clone);
   
@@ -159,11 +167,13 @@ function displayStudentCard(student){
   //add eventListeners
   popup.querySelector("[data-field=prefects]").addEventListener(`click`, isPrefect);
   popup.querySelector("[data-field=squad]").addEventListener(`click`, addToSquad);
-  
-// function removeEventListeners(){
-//   popup.querySelector("[data-field=prefects]").removeEventListener(`click`, isPrefect);
-//   popup.querySelector("[data-field=squad]").removeEventListener(`click`, addToSquad);
-// }
+  popup.querySelector("[data-field=expell]").addEventListener('click', expellStudent);
+
+function removeEventListeners(){
+  popup.querySelector("[data-field=prefects]").removeEventListener(`click`, isPrefect);
+  popup.querySelector("[data-field=squad]").removeEventListener(`click`, addToSquad);
+  popup.querySelector("[data-field=expell]").removeEventListener('click', expellStudent);
+}
 
   function addToSquad() {
     if (student.bloodstatus === "Pure-Blood" || student.house === "Slytherin") {
@@ -176,8 +186,7 @@ function displayStudentCard(student){
     displayStudentCard(student);
     }
 
-
-  // ******* PREFECT *******
+  // ******* MAKE PREFECT FROM STUDENT CARD *******
   // Define Prefect status
 
   if (student.prefect) {
@@ -202,13 +211,25 @@ function displayStudentCard(student){
     displayStudentCard(student);
   }
 
+  // ****** EXPELL STUDENT FROM STUDENT CARD *******
+  function expellStudent(){
+    removeEventListeners();
+    let oneStudent = allStudents.splice(allStudents.indexOf(student), 1)[0];
+    expelledStudents.push(oneStudent);
+    buildList();
+    showNumbers();
+  }
+
+// ****** CLOSE STUDENT CARD *******
   function closeStudentCard(){
   popup.classList.add("hide");
   popup.querySelector("#dialog").classList = "";
   }
 }
 
+
 // ------------- CONTROLLER -------------
+
 // ******* clean data *******
 function makeFirstCapital(x){
 return x.charAt(0).toUpperCase() + x.substring(1).toLowerCase();
@@ -264,12 +285,14 @@ function putImage(lastname, firstname){
   }
 }
 
-// ******* buttons *******
+// ******* BUTTONS *******
 
 function triggerButtons(){
   document.querySelectorAll(".filter").forEach((each) =>{each.addEventListener("click", filterInput);}); 
   document.querySelectorAll("[data-filter=prefects]").forEach((each) =>{each.addEventListener("click", filterByPrefect);}); 
   document.querySelectorAll("[data-filter=squad]").forEach((each) =>{each.addEventListener("click", filterBySquad);}); 
+  document.querySelectorAll("[data-filter=expelled]").forEach((each) =>{each.addEventListener("click", showExpelled);}); 
+  document.querySelectorAll("[data-filter=enrolled]").forEach((each) =>{each.addEventListener("click", showEnrolled);}); 
   document.querySelector("#sort-options").addEventListener("change", (event) => {
     let selectedOption = event.target.selectedOptions[0];
     globalObject.sortBy = selectedOption.dataset.sort;
@@ -278,10 +301,11 @@ function triggerButtons(){
     document.querySelector("#searchbox").addEventListener("input", liveSearch);
 }
 
-// ******* filtering *******
+// ******* FILTERING *******
 // selectFilter (set the event as filter)
 function filterInput(event){
   let filter = event.target.dataset.filter;
+  console.log(filter);
   setFilter(filter);
 }
 
@@ -290,7 +314,6 @@ function setFilter(filter){
   globalObject.filter = filter;
   buildList();
 }
-
 
 // filterList (is returning the filter list)
 function filterList(filteredList){
@@ -316,7 +339,6 @@ function filterByPrefect(){
     globalObject.prefects = allStudents.filter(student => student.prefect);
     displayList(globalObject.prefects);
     // console.log(globalObject.filter)
-
 }
 
 function filterBySquad(){
@@ -325,7 +347,15 @@ function filterBySquad(){
   buildList();
 }
 
-// ******* sorting *******
+function showExpelled(){
+  displayList(expelledStudents);
+}
+
+function showEnrolled(){
+  displayList(allStudents);
+}
+
+// ******* SORTING *******
 
 function sortList(sortedList){
   let direction = 1;
@@ -347,7 +377,7 @@ function sortList(sortedList){
   return sortedList;
 }
 
-// ******* make a prefect *******
+// ******* PREFECT *******
 
 function tryToMakeAPrefect(selectedStudent){
   console.log("I'm in trytomakeaprefect");
@@ -417,7 +447,7 @@ function tryToMakeAPrefect(selectedStudent){
   }
 }
 
-// ******* search bar ********
+// ******* SEARCH BAR ********
 // https://css-tricks.com/in-page-filtered-search-with-vanilla-javascript/
 // right now it's searching inside the entire student row, we need to narrow it down to only name, surname e nickname
 function liveSearch() {
@@ -440,3 +470,4 @@ function liveSearch() {
     }
   }
 }
+
