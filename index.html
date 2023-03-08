@@ -11,8 +11,7 @@
     <title>Hogwarts List</title>
   </head>
   <body>
-    <!-- <header></header> -->
-    <main>
+   <main>
       
       <section id="aside">
         <h1>Hogwarts</h1>
@@ -49,7 +48,10 @@
       <div id="main-area">
 
         <section class="header">
+          <div id="year-and-hack">
           <h2>Class 1991</h2>
+          <button id="hacking">Click here</button>
+        </div>
           <section id="filter">
             <div>
               <h3>Houses</h3>
@@ -103,7 +105,6 @@
            <button class="filter" data-action="filter" data-filter="*"> Remove all filters </button>
            <div id="drop-down-menu">
              <select id="sort-options">
-                <option>Sort by:</option>
                 <option data-action="sort" data-sort-direction="asc" data-sort="firstname">First name: A - Z</option>
                 <option data-action="sort" data-sort-direction="desc" data-sort="firstname">First name: Z - A</option>
                 <option data-action="sort" data-sort-direction="asc" data-sort="lastname">Last name: A - Z</option>
@@ -118,12 +119,9 @@
         </section>
 
       </div>
-    </main>
-
-
-
-  <!-- template student list card -->
-  <template id="student">
+   </main>
+   <!-- template student list card -->
+   <template id="student">
       <div id="single-student">
         <div id="student-fullname">
           <img id="image" src="images/bones_s.png" alt="propic"/>
@@ -136,10 +134,10 @@
           <img id="blood-status-icon" src="images/icon-pure-blood.svg" alt="blood-status-icon">
         </div>
       </div>
-  </template>
+   </template>
 
-  <!-- student card modal - popup window -->
-  <div id="student-card" class="modal hide">
+   <!-- student card modal - popup window -->
+   <div id="student-card" class="modal hide">
       <article id="dialog">
         <button class="closebutton">X</button>
         <div class="popup-body">
@@ -187,10 +185,10 @@
           </div>
         </div>
       </article>
-  </div>
+   </div>
 
-  <!-- dialogs -->
-  <div id="onlyonekind" class="modal hide">
+   <!-- dialogs -->
+   <div id="onlyonekind" class="modal hide">
     <div class="warning-dialog">
       <button class="closebutton">X</button>
       <h1><span>Name</span> can't be prefect.</h1>
@@ -206,7 +204,6 @@
         </button>   
       </p>
     </div>
-  </div>
-
+   </div>
  </body>
 </html>

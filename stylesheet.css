@@ -43,6 +43,10 @@ main {
   font-weight: 100;
 }
 
+#year-and-hack {
+  display: flex;
+  justify-content: space-between;
+}
 /* Filter section */
 
 section#filter {
