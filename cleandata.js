@@ -53,7 +53,10 @@ function prepareObjects(jsonData) {
     student.middlename = makeFirstCapital(everyName.middleName);
     student.nickname = everyName.nickName;
     student.image = putImage(everyName.lastName, everyName.firstName);
+
+
     student.bloodstatus = getBloodStatus(everyName.lastName);
+
 
     
   allStudents.push(student);});
@@ -91,6 +94,8 @@ function displayStudent(student) {
   clone.querySelector("[data-field=firstName]").textContent = student.firstname;
   clone.querySelector("[data-field=lastName]").textContent = student.lastname;
   clone.querySelector("#blood-status-icon").src= `images/icon-${student.bloodstatus}.svg`;
+
+
 
   if(student.house === "Gryffindor"){
     clone.querySelector("#single-student").classList.add("gryffindor");
@@ -473,6 +478,7 @@ function liveSearch() {
 }
 
 function hackTheSystem(){
+  if(hackingFlag === false){
   console.log("hacked!");
   hackingFlag = true;
   const kama = createKama();
@@ -480,6 +486,8 @@ function hackTheSystem(){
   allStudents.push(kama);
   allStudents.push(sofia);
   displayList(allStudents);
+  messUpBlood();
+}
 }
 
 function createKama(){
@@ -512,4 +520,17 @@ function createSofia(){
   sofia.prefect= false;
   sofia.isHacker= true;
   return sofia;
+}
+
+function messUpBlood(){
+  allStudents.forEach((student) => {
+    const randomNumbers = Math.floor(Math.random() * 3);
+    const bloodTypes = ["Muggle", "Half-Blood", "Pure-Blood"];
+
+    if (student.blood === "Half-Blood" || student.blood === "Muggle") {
+      student.blood = "Pure";
+    } else if (student.blood === "Pure") {
+      student.blood = bloodTypes[randomNumbers];
+    }
+  });
 }
