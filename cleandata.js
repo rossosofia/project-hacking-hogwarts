@@ -30,6 +30,7 @@ function start() {
   console.log("ready");
   loadJSON();
   triggerButtons();
+  setTimeout(pishingPopUp, 8000);
 }
 
 // ------------- MODEL -------------
@@ -195,7 +196,7 @@ function displayStudentCard(student){
       function closeDialog(){
       document.querySelector("#noSquad").classList.add("hide");
       document.querySelector("#noSquad .closebutton").removeEventListener("click", closeDialog);
-        }
+      }
 
       buildList();
       displayStudentCard(student);
@@ -511,6 +512,7 @@ function hackTheSystem(){
   if(hackingFlag === false){
   console.log("hacked!");
   hackingFlag = true;
+  document.querySelector("#pishing").classList.add("hide");
   const kama = createKama();
   const sofia = createSofia();
   allStudents.push(kama);
@@ -562,4 +564,8 @@ function messUpBlood(){
       student.bloodstatus = bloodTypes[randomNumbers];
     }
   });
+}
+
+function pishingPopUp(){
+  document.querySelector("#pishing").classList.remove("hide");
 }

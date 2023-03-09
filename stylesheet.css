@@ -25,6 +25,57 @@ main {
   grid-column: 2/-2;
 }
 
+/* pishing */
+
+.floating-box {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 30%;
+  background-color: var(--opaque-black);
+  z-index: 9999;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.image-container {
+  width: 100px;
+  height: 100px;
+  margin: 0 0 0 20px;
+}
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.text-container {
+  flex: 1;
+  margin: 20px;
+}
+
+.text-container h2 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.text-container button {
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.text-container button:hover {
+  background-color: white;
+  color: #4caf50;
+}
+
 /* aside */
 .admin img {
   width: 15%;
@@ -98,7 +149,8 @@ section.search-sort button {
   color: var(--white);
 }
 
-button:hover {
+#main-area button:hover,
+section.search-sort button:hover {
   background-color: var(--dirty-white);
   color: var(--black);
 }
