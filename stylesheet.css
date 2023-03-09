@@ -254,6 +254,9 @@ td[data-field="prefects"][data-prefect="false"]::after {
   font-size: 1.5rem;
 }
 
+#expell-img{
+  max-width: 50%;
+}
 /* POPUP BUTTONS */
 
 #status {

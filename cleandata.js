@@ -188,8 +188,15 @@ function displayStudentCard(student){
         student.squad = !student.squad;
         globalObject.squad = allStudents.filter(student => student.squad);
       } else {
-        alert("you cannot");
+        document.querySelector("#noSquad").classList.remove("hide");
+        document.querySelector("#noSquad h1 span").textContent =`${student.firstname}`;
+        document.querySelector("#noSquad .closebutton").addEventListener("click", closeDialog);
       }
+      function closeDialog(){
+      document.querySelector("#noSquad").classList.add("hide");
+      document.querySelector("#noSquad .closebutton").removeEventListener("click", closeDialog);
+        }
+
       buildList();
       displayStudentCard(student);
     }
@@ -230,17 +237,20 @@ function displayStudentCard(student){
   // ****** EXPELL STUDENT FROM STUDENT CARD *******
   function expellStudent(){
     if(student.isHacker){
-      alert("you can't b***h!!");
-
+      document.querySelector("#noExpell").classList.remove("hide");
+      document.querySelector("#noExpell h1 span").textContent =`${student.firstname}`;
+      document.querySelector("#noExpell .closebutton").addEventListener("click", closeDialog);
     }else {
-    // popup.querySelector("[data-field=expell]").removeEventListener('click', expellStudent);
     removeEventListeners();
     let oneStudent = allStudents.splice(allStudents.indexOf(student), 1)[0];
     expelledStudents.push(oneStudent);
     buildList();
     showNumbers();
     }
-
+    function closeDialog(){
+      document.querySelector("#noExpell").classList.add("hide");
+      document.querySelector("#noExpell .closebutton").removeEventListener("click", closeDialog);
+     }
   }
 
 // ****** CLOSE STUDENT CARD *******
