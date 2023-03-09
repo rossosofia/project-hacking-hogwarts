@@ -120,6 +120,7 @@ function displayStudent(student) {
 }
 
 function displayStudentCard(student){
+
   const popup = document.querySelector("#student-card");
   popup.classList.remove("hide");
   popup.querySelector("#dialog").classList = "";
@@ -140,6 +141,7 @@ function displayStudentCard(student){
   popup.querySelector("[data-field=house]").textContent = student.house;
   popup.querySelector("[data-field=bloodStatus]").textContent = student.bloodstatus;
   popup.querySelector("[data-field=prefects]").dataset.prefect = student.prefect;
+  console.log(student.image);
 
   //define border colour
   if(student.house === "Gryffindor"){
@@ -171,7 +173,6 @@ function displayStudentCard(student){
    }
 
   function addToSquad() {
-    removeEventListeners();
     popup.querySelector("[data-field=squad]").removeEventListener(`click`, addToSquad);
     addToSquad2();
     
@@ -512,7 +513,7 @@ function createKama(){
   kama.middlename= "";
   kama.nickname= "Koukoumafka";
   kama.gender= "girl";
-  kama.image= "";
+  kama.image= "images/kamarini.png";
   kama.house= "Hufflepuff";
   kama.bloodstatus= "Muggle";
   kama.squad= false ;
