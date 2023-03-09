@@ -70,6 +70,7 @@ function buildList() {
   const currentList = filterList(allStudents);
   let sortedList = sortList(currentList);
   displayList(sortedList);
+  document.querySelector(".list-length span").textContent = sortedList.length;
 }
 
 function displayList(students) {
@@ -362,21 +363,24 @@ function filterByPrefect(){
   //let prefects; // i made it global so i can call it here
     globalObject.prefects = allStudents.filter(student => student.prefect);
     displayList(globalObject.prefects);
-    // console.log(globalObject.filter)
+    document.querySelector(".list-length span").textContent = globalObject.prefects.length;
 }
 
 function filterBySquad(){
   // document.querySelector("[data-filter=squad").classList.add("active");
   globalObject.squad = allStudents.filter(student => student.squad);
   displayList(globalObject.squad);
+  document.querySelector(".list-length span").textContent = globalObject.squad.length;
 }
 
 function showExpelled(){
   displayList(expelledStudents);
+  document.querySelector(".list-length span").textContent = expelledStudents.length;
 }
 
 function showEnrolled(){
   displayList(allStudents);
+  document.querySelector(".list-length span").textContent = allStudents.length;
 }
 
 // ******* SORTING *******
