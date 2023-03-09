@@ -107,11 +107,15 @@
                Enrolled
              </button>
             </div>
+            <div>
+              <h3>Clear</h3>
+              <button class="filter" data-action="filter" data-filter="*"> Remove all filters </button>
+            </div>
           </section>
           <section class="search-sort">
+            
            <input type="search" id="searchbox" placeholder="Type a name here..." />
-           <button class="filter" data-action="filter" data-filter="*"> Remove all filters </button>
-           <p class="list-length"><span>Name</span></p>
+
            <div id="drop-down-menu">
              <select id="sort-options">
                 <option data-action="sort" data-sort-direction="asc" data-sort="firstname">First name: A - Z</option>
@@ -122,6 +126,8 @@
              </select>
            </div>
           </section>
+          <p class="list-length">Results: <span>Name</span></p>
+
         </section>
 
         <section class="students-list">
@@ -177,15 +183,11 @@
         <div class="popup-column">
           <div>
            <p class="info">House</p>
-            <div id="house-info">
             <p data-field="house">Housename</p>
-            </div>
           </div>
           <div>
             <p class="info">Blood status</p>
-            <div id="blood-info">
-            <img id="blood-status-icon" src="images/icon-pure-blood.svg" alt="blood-status-icon"><p data-field="bloodStatus">-</p>
-            </div>
+            <p data-field="bloodStatus">-</p>
           </div>
           <div>
            <p class="info">Gender</p>
