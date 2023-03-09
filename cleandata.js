@@ -284,7 +284,7 @@ function makeLastNameCapital(x){
 function createName(fullname){
     let firstName = fullname.substring(0, fullname.indexOf(" "));
     let lastName = fullname.substring(fullname.lastIndexOf(" ") +1);
-    let nickName;
+    let nickName = "-";
     let middleName;
 
     const singleName = /[ ]/
@@ -303,7 +303,7 @@ function createName(fullname){
       middleName = fullname.substring(fullname.indexOf(" ")+1, isNick -1);
     }
 
-    if (middleName = ""){
+    if (!middleName.trim()) {
       middleName = "-";
     }
 
