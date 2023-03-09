@@ -171,15 +171,36 @@ function displayStudentCard(student){
    }
 
   function addToSquad() {
-    if (student.bloodstatus === "Pure-Blood" || student.house === "Slytherin") {
+    removeEventListeners();
+    popup.querySelector("[data-field=squad]").removeEventListener(`click`, addToSquad);
+    addToSquad2();
+    
+    if(hackingFlag){
+     setTimeout( removeFromSquad, 3000);
+     globalObject.squad = allStudents.filter(student => student.squad);
+    }
+
+    function addToSquad2(){
+      console.log("im in the add to squad -not hacked mode");
+      if (student.bloodstatus === "Pure-Blood" || student.house === "Slytherin") {
         student.squad = !student.squad;
         globalObject.squad = allStudents.filter(student => student.squad);
-    } else {
-    alert("you cannot");
+      } else {
+        alert("you cannot");
+      }
+      buildList();
+      displayStudentCard(student);
     }
-    buildList();
-    displayStudentCard(student);
+
+    function removeFromSquad(){
+  
+      student.squad = false;
+      console.log("im in the remove from squad",student)
+      buildList();
+      displayStudentCard(student);
+    }
   }
+
 
   // ******* MAKE PREFECT FROM STUDENT CARD *******
   // Define Prefect status
@@ -210,6 +231,7 @@ function displayStudentCard(student){
       alert("you can't b***h!!");
 
     }else {
+    // popup.querySelector("[data-field=expell]").removeEventListener('click', expellStudent);
     removeEventListeners();
     let oneStudent = allStudents.splice(allStudents.indexOf(student), 1)[0];
     expelledStudents.push(oneStudent);
@@ -223,6 +245,7 @@ function displayStudentCard(student){
   function closeStudentCard(){
   popup.classList.add("hide");
   popup.querySelector("#dialog").classList = "";
+  removeEventListeners();
   }
 }
 
@@ -342,9 +365,9 @@ function filterByPrefect(){
 }
 
 function filterBySquad(){
-  document.querySelector("[data-filter=squad").classList.add("active");
-  // displayList(globalObject.squad);
-  buildList();
+  // document.querySelector("[data-filter=squad").classList.add("active");
+  globalObject.squad = allStudents.filter(student => student.squad);
+  displayList(globalObject.squad);
 }
 
 function showExpelled(){
