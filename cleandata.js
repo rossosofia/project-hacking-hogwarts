@@ -126,6 +126,7 @@ function displayStudentCard(student){
   const popup = document.querySelector("#student-card");
   popup.classList.remove("hide");
   popup.querySelector("#dialog").classList = "";
+  expellButton();
 
   //add eventListeners
   popup.querySelector(".closebutton").addEventListener('click', closeStudentCard);
@@ -237,6 +238,10 @@ function displayStudentCard(student){
 
   // ****** EXPELL STUDENT FROM STUDENT CARD *******
   function expellStudent(){
+  // removeExpellButton();
+  document.querySelector("[data-field=expell]").classList.remove("active");
+  document.querySelector("[data-field=expell]").classList.add("expelled");
+  document.querySelector("[data-field=expell]").textContent="Expelled";
     if(student.isHacker){
       document.querySelector("#noExpell").classList.remove("hide");
       document.querySelector("#noExpell h1 span").textContent =`${student.firstname}`;
@@ -569,3 +574,25 @@ function messUpBlood(){
 function pishingPopUp(){
   document.querySelector("#pishing").classList.remove("hide");
 }
+
+function expellButton(){
+  const statusButton = document.querySelector("[data-field=expell]");
+  statusButton.addEventListener('mouseover', () => {
+    statusButton.textContent = "Expell";
+  });
+  
+  statusButton.addEventListener('mouseout', () => {
+    statusButton.textContent = 'Enrolled';
+  });
+}
+
+// function removeExpellButton(){
+//   const statusButton = document.querySelector("[data-field=expell]");
+//   statusButton.removeEventListener('mouseover', () => {
+//     statusButton.textContent = "Expell";
+//   });
+  
+//   statusButton.removeEventListener('mouseout', () => {
+//     statusButton.textContent = 'Enrolled';
+//   });
+// }
