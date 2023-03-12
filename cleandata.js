@@ -144,7 +144,6 @@ function displayStudentCard(student){
   popup.querySelector("[data-field=house]").textContent = student.house;
   popup.querySelector("[data-field=bloodStatus]").textContent = student.bloodstatus;
   popup.querySelector("[data-field=prefects]").dataset.prefect = student.prefect;
-  console.log(student.image);
 
   //define border colour
   if(student.house === "Gryffindor"){
