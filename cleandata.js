@@ -90,7 +90,7 @@ function displayStudent(student) {
   clone.querySelector("[data-field=firstName]").textContent = student.firstname;
   clone.querySelector("[data-field=lastName]").textContent = student.lastname;
   clone.querySelector("#blood-status-icon").src= `images/icon-${student.bloodstatus.toLowerCase()}.svg`;
-  
+
   if(student.house === "Gryffindor"){
     clone.querySelector("#single-student").classList.add("gryffindor");
   }else if(student.house === "Slytherin"){
@@ -317,7 +317,7 @@ function createName(fullname){
 
 function putImage(lastname, firstname){
     if (lastname.includes("-")){
-      return `images/${lastname.substring(lastname.indexOf("-")+1)}_${firstname.charAt(0).toLowerCase()}.png`;
+      return `images/${lastname.substring(lastname.indexOf("-")+1).toLowerCase()}_${firstname.charAt(0).toLowerCase()}.png`;
     } else if (lastname === "Patil") {
       return `images/${lastname.toLowerCase()}_${firstname.toLowerCase()}.png`;
     } else {
