@@ -89,7 +89,7 @@ function displayStudent(student) {
   clone.querySelector("#image").src = student.image;
   clone.querySelector("[data-field=firstName]").textContent = student.firstname;
   clone.querySelector("[data-field=lastName]").textContent = student.lastname;
-  clone.querySelector("#blood-status-icon").src= `images/icon-${student.bloodstatus}.svg`;
+  clone.querySelector("#blood-status-icon").src= `images/icon-${student.bloodstatus.toLowerCase()}.svg`;
 
   if(student.house === "Gryffindor"){
     clone.querySelector("#single-student").classList.add("gryffindor");
@@ -585,14 +585,3 @@ function expellButton(){
     statusButton.textContent = 'Enrolled';
   });
 }
-
-// function removeExpellButton(){
-//   const statusButton = document.querySelector("[data-field=expell]");
-//   statusButton.removeEventListener('mouseover', () => {
-//     statusButton.textContent = "Expell";
-//   });
-  
-//   statusButton.removeEventListener('mouseout', () => {
-//     statusButton.textContent = 'Enrolled';
-//   });
-// }
